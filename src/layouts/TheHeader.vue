@@ -1,8 +1,5 @@
 <template>
-  <q-header
-    class="text-white shadow-1"
-    style="background: #050a14"
-    height-hint="61.59">
+  <q-header class="text-white bg-negative" height-hint="61.59">
     <q-toolbar class="q-py-sm q-px-md">
       <q-btn
         dense
@@ -14,62 +11,15 @@
         class="q-pa-sm logo"
         no-caps />
 
-      <!-- <q-select
-        ref="search"
-        dark
-        dense
-        standout
-        use-input
-        hide-selected
-        class="GL__toolbar-select q-ml-sm"
-        color="black"
-        :stack-label="false"
-        label="Поиск"
-        v-model="text"
-        :options="filteredOptions"
-        @filter="filter"
-        style="width: 300px">
-        <template v-slot:no-option>
-          <q-item>
-            <q-item-section>
-              <div class="text-center">
-                <q-spinner-pie color="grey-5" size="24px" />
-              </div>
-            </q-item-section>
-          </q-item>
-        </template>
-
-        <template v-slot:option="scope">
-          <q-item v-bind="scope.itemProps" class="GL__select-GL__menu-link">
-            <q-item-section side>
-              <q-icon name="collections_bookmark" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label v-html="scope.opt.label" />
-            </q-item-section>
-            <q-item-section side :class="{ 'default-type': !scope.opt.type }">
-              <q-btn
-                outline
-                dense
-                no-caps
-                text-color="blue-grey-5"
-                size="12px"
-                class="bg-grey-1 q-px-sm">
-                {{ scope.opt.type || "Jump to" }}
-                <q-icon name="subdirectory_arrow_left" size="14px" />
-              </q-btn>
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select> -->
-
       <div
         v-if="$q.screen.gt.sm"
         class="GL__toolbar-link q-ml-xs q-gutter-md text-body2 text-weight-bold row items-center no-wrap">
-        <a href="javascript:void(0)" class="text-white"> Обсуждения </a>
-        <a href="javascript:void(0)" class="text-white"> Сообщество </a>
-        <a href="javascript:void(0)" class="text-white"> Магазин </a>
-        <a href="javascript:void(0)" class="text-white"> Поддержка </a>
+        <router-link
+          v-for="(link, index) in headerLinks"
+          :key="index"
+          :to="{ name: 'main' }"
+          >{{ link.name }}</router-link
+        >
       </div>
 
       <q-space />
@@ -122,33 +72,13 @@
                 </q-item-section>
               </q-item>
               <q-separator />
-              <q-item clickable class="GL__menu-link-status">
-                <q-item-section>
-                  <div>
-                    <q-icon name="tag_faces" color="blue-9" size="14px" />
-                     Статус
-                  </div>
-                </q-item-section>
-              </q-item>
-              <q-separator />
-              <q-item clickable class="GL__menu-link">
-                <q-item-section>Ваш профиль</q-item-section>
-              </q-item>
-              <q-item clickable class="GL__menu-link">
-                <q-item-section>Ваши проекты</q-item-section>
-              </q-item>
-              <q-item clickable class="GL__menu-link">
-                <q-item-section>Ваши обсуждения</q-item-section>
-              </q-item>
-              <q-item clickable class="GL__menu-link">
-                <q-item-section>Ваши товары</q-item-section>
-              </q-item>
-              <q-separator />
-              <q-item clickable class="GL__menu-link">
-                <q-item-section>Помощь</q-item-section>
-              </q-item>
-              <q-item clickable class="GL__menu-link">
-                <q-item-section>Настройки</q-item-section>
+
+              <q-item
+                clickable
+                class="GL__menu-link"
+                v-for="(link, index) in accountLinks"
+                @click="goToPage(link)">
+                <q-item-section>{{ link.name }}</q-item-section>
               </q-item>
               <q-item clickable class="GL__menu-link bg-red">
                 <q-item-section>Выход</q-item-section>
@@ -161,66 +91,65 @@
   </q-header>
 </template>
 <script>
-import { ref } from "vue";
-import { fabGithub } from "@quasar/extras/fontawesome-v6";
-
-const stringOptions = [
-  "quasarframework/quasar",
-  "quasarframework/quasar-awesome",
-];
-
+import { reactive } from "vue";
+import { useRouter } from "vue-router";
 export default {
   name: "TheHeader",
 
   setup() {
-    const text = ref("");
-    const options = ref(null);
-    const filteredOptions = ref([]);
-    const search = ref(null);
+    const router = useRouter();
+    const headerLinks = reactive([
+      {
+        name: "Обсуждения",
+        route: "discussions",
+      },
+      {
+        name: "Сообщество",
+        route: "community",
+      },
+      {
+        name: "Магазин",
+        route: "shop",
+      },
+      {
+        name: "Поддержка",
+        route: "support",
+      },
+    ]);
+    const accountLinks = reactive([
+      {
+        name: "Ваш профиль",
+        route: "account",
+      },
+      {
+        name: "Ваши проекты",
+        route: "main",
+      },
+      {
+        name: "Ваши обсуждения",
+        route: "main",
+      },
+      {
+        name: "Ваши товары",
+        route: "main",
+      },
+      {
+        name: "Помощь",
+        route: "main",
+      },
+      {
+        name: "Настройки",
+        route: "main",
+      },
+    ]);
 
-    function filter(val, update) {
-      if (options.value === null) {
-        setTimeout(() => {
-          options.value = stringOptions;
-          search.value.filter("");
-        }, 2000);
-        update();
-        return;
-      }
-
-      if (val === "") {
-        update(() => {
-          filteredOptions.value = options.value.map((op) => ({ label: op }));
-        });
-        return;
-      }
-
-      update(() => {
-        filteredOptions.value = [
-          {
-            label: val,
-            type: "In this repository",
-          },
-          {
-            label: val,
-            type: "All GitHub",
-          },
-          ...options.value
-            .filter((op) => op.toLowerCase().includes(val.toLowerCase()))
-            .map((op) => ({ label: op })),
-        ];
-      });
-    }
-
+    const goToPage = (link) => {
+      router.push({ name: link.route });
+    };
     return {
-      fabGithub,
-
-      text,
-      options,
-      filteredOptions,
-      search,
-
-      filter,
+      headerLinks,
+      accountLinks,
+      goToPage
     };
   },
 };

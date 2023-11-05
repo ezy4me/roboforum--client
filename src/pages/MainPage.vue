@@ -1,13 +1,7 @@
 <template>
-    <q-page :style-fn="myTweak" padding>
-        Главная страница
-    </q-page>
+  <q-page padding> Главная страница </q-page>
 </template>
 <script>
-export default {
-    
-}
+export default {};
 </script>
-<style lang="">
-    
-</style>
+<style lang=""></style>

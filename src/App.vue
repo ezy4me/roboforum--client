@@ -1,11 +1,17 @@
 <template>
   <q-layout>
     <TheHeader />
+    <q-drawer show-if-above side="left" class="my-drawer">
+      <!-- drawer content -->
+    </q-drawer>
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-drawer show-if-above side="right" class="my-drawer">
+      <!-- drawer content -->
+    </q-drawer>
   </q-layout>
-  <VBackgroundStars/>
+  <VBackgroundStars />
 </template>
 
 <script>
@@ -25,3 +31,12 @@ export default {
   },
 };
 </script>
+
+<style>
+.q-drawer {
+  background: transparent;
+}
+.q-page {
+  z-index: 999;
+}
+</style>

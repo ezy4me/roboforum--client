@@ -6,7 +6,6 @@
           dense
           flat
           icon="computer"
-          label="ROBOFORUM"
           size="24px"
           color="white"
           class="q-pa-sm logo"

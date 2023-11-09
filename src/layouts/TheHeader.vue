@@ -1,15 +1,17 @@
 <template>
   <q-header class="text-white bg-negative" height-hint="61.59">
     <q-toolbar class="q-py-sm q-px-md">
-      <q-btn
-        dense
-        flat
-        icon="computer"
-        label="ROBOFORUM"
-        size="24px"
-        color="white"
-        class="q-pa-sm logo"
-        no-caps />
+      <router-link to="/">
+        <q-btn
+          dense
+          flat
+          icon="computer"
+          label="ROBOFORUM"
+          size="24px"
+          color="white"
+          class="q-pa-sm logo"
+          no-caps />
+      </router-link>
 
       <div
         v-if="$q.screen.gt.sm"
@@ -17,7 +19,7 @@
         <router-link
           v-for="(link, index) in headerLinks"
           :key="index"
-          :to="{ name: 'main' }"
+          :to="{ name: link.route }"
           >{{ link.name }}</router-link
         >
       </div>
@@ -27,8 +29,18 @@
       <div
         v-if="$q.screen.gt.sm"
         class="GL__toolbar-link q-ml-xs q-gutter-md text-body2 text-weight-bold row items-center no-wrap">
-        <a href="javascript:void(0)" class="text-white"> Войти </a>
-        <a href="javascript:void(0)" class="text-white"> Зарегистрироваться </a>
+        <a
+          href="javascript:void(0)"
+          @click="isAuthDialog = true"
+          class="text-white">
+          Войти
+        </a>
+        <a
+          href="javascript:void(0)"
+          @click="isRegDialog = true"
+          class="text-white">
+          Зарегистрироваться
+        </a>
       </div>
 
       <div class="q-pl-sm q-gutter-sm row items-center no-wrap">
@@ -89,11 +101,20 @@
       </div>
     </q-toolbar>
   </q-header>
+  <q-dialog v-model="isAuthDialog">
+    <VAuthForm></VAuthForm>
+  </q-dialog>
+  <q-dialog v-model="isRegDialog">
+    <VRegForm></VRegForm>
+  </q-dialog>
 </template>
 <script>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import VAuthForm from "../components/VAuthForm.vue";
+import VRegForm from "../components/VRegForm.vue";
 export default {
+  components: { VAuthForm, VRegForm },
   name: "TheHeader",
 
   setup() {
@@ -101,19 +122,19 @@ export default {
     const headerLinks = reactive([
       {
         name: "Обсуждения",
-        route: "discussions",
+        route: "forum-discussions",
       },
       {
         name: "Сообщество",
-        route: "community",
+        route: "forum-community",
       },
-      {
-        name: "Магазин",
-        route: "shop",
-      },
+      // {
+      //   name: "Магазин",
+      //   route: "shop",
+      // },
       {
         name: "Поддержка",
-        route: "support",
+        route: "main",
       },
     ]);
     const accountLinks = reactive([
@@ -143,13 +164,18 @@ export default {
       },
     ]);
 
+    const isAuthDialog = ref(false);
+    const isRegDialog = ref(false);
+
     const goToPage = (link) => {
       router.push({ name: link.route });
     };
     return {
       headerLinks,
       accountLinks,
-      goToPage
+      goToPage,
+      isAuthDialog,
+      isRegDialog,
     };
   },
 };
@@ -161,7 +187,7 @@ export default {
       visibility: hidden
 
     &:hover
-      background: #0366d6
+      background: #3F51B5
       color: white
       .q-item__section--side
         color: white
@@ -176,7 +202,7 @@ export default {
         opacity: 0.7
 
   &__menu-link:hover
-    background: #0366d6
+    background: #3F51B5
     color: white
 
   &__menu-link-status

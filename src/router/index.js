@@ -11,6 +11,16 @@ const routes = [
         name: 'account',
         component: () => import('../pages/AccountPage.vue'),
     },
+    {
+        path: '/forum-discussions',
+        name: 'forum-discussions',
+        component: () => import('../pages/ForumDiscussionsPage.vue'),
+    },
+    {
+        path: '/forum-community',
+        name: 'forum-community',
+        component: () => import('../pages/ForumCommunityPage.vue'),
+    },
 ];
 
 const router = createRouter({

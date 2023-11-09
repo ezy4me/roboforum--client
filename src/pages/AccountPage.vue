@@ -19,6 +19,7 @@
         </q-card>
         <q-card flat  class="my-card q-mb-md bg-negative">
           <q-card-section>
+            <q-btn flat class="full-width q-mb-md" label="Редактировать профиль" />
             <q-btn class="full-width" color="red" label="Выйти" />
           </q-card-section>
         </q-card>

@@ -7,7 +7,7 @@
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <q-input
           filled
-          v-model="email"
+          v-model="state.email"
           label="Email"
           lazy-rules
           :rules="[
@@ -16,7 +16,7 @@
 
         <q-input
           filled
-          v-model="password"
+          v-model="state.password"
           label="Пароль"
           lazy-rules
           :rules="[
@@ -34,48 +34,42 @@
     </q-card-section>
   </q-card>
 </template>
+
 <script>
+import store from "@/store";
 import { useQuasar } from "quasar";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
 export default {
   setup() {
     const $q = useQuasar();
 
-    const email = ref(null);
-    const password = ref(null);
-    const accept = ref(false);
+    const initialState = reactive({
+      email: "",
+      password: "",
+    });
+
+    const state = reactive({ ...initialState });
+
+    const onSubmit = () => {
+      store.dispatch("auth/ON_LOGIN", {
+        ...state,
+      });
+    };
+
+    const onReset = () => {
+      state.email = "";
+      state.password = "";
+      accept.value = false;
+    };
 
     return {
-      email,
-      password,
-      accept,
-
-      onSubmit() {
-        if (accept.value !== true) {
-          $q.notify({
-            color: "red-5",
-            textColor: "white",
-            icon: "warning",
-            message: "You need to accept the license and terms first",
-          });
-        } else {
-          $q.notify({
-            color: "green-4",
-            textColor: "white",
-            icon: "cloud_done",
-            message: "Submitted",
-          });
-        }
-      },
-
-      onReset() {
-        name.value = null;
-        age.value = null;
-        accept.value = false;
-      },
+      state,
+      onSubmit,
+      onReset,
     };
   },
 };
 </script>
-<style lang=""></style>
+
+<style lang="scss"></style>

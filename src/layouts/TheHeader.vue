@@ -26,7 +26,7 @@
       <q-space />
 
       <div
-        v-if="$q.screen.gt.sm"
+        v-if="$q.screen.gt.sm && !user"
         class="GL__toolbar-link q-ml-xs q-gutter-md text-body2 text-weight-bold row items-center no-wrap">
         <a
           href="javascript:void(0)"
@@ -42,7 +42,7 @@
         </a>
       </div>
 
-      <div class="q-pl-sm q-gutter-sm row items-center no-wrap">
+      <div v-if="user" class="q-pl-sm q-gutter-sm row items-center no-wrap">
         <q-btn
           v-if="$q.screen.gt.xs"
           dense
@@ -108,15 +108,17 @@
   </q-dialog>
 </template>
 <script>
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import VAuthForm from "../components/VAuthForm.vue";
 import VRegForm from "../components/VRegForm.vue";
+import { useStore } from "vuex";
 export default {
   components: { VAuthForm, VRegForm },
   name: "TheHeader",
 
   setup() {
+    const store = useStore();
     const router = useRouter();
     const headerLinks = reactive([
       {
@@ -166,6 +168,8 @@ export default {
     const isAuthDialog = ref(false);
     const isRegDialog = ref(false);
 
+    const user = computed(() => store.state.auth.user);
+
     const goToPage = (link) => {
       router.push({ name: link.route });
     };
@@ -175,6 +179,7 @@ export default {
       goToPage,
       isAuthDialog,
       isRegDialog,
+      user,
     };
   },
 };

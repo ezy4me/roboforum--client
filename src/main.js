@@ -18,6 +18,8 @@ import App from './App.vue'
 
 import router from './router'
 
+import store from './store'
+
 const myApp = createApp(App)
 
 
@@ -29,6 +31,7 @@ myApp.use(Quasar, {
 // Assumes you have a <div id="app"></div> in your index.html
 myApp
     .use(router)
+    .use(store)
     .mount('#app')
 
 

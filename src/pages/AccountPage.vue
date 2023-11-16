@@ -108,7 +108,22 @@
   </q-page>
 </template>
 <script>
-export default {};
+import { computed, onMounted } from "vue";
+import { useStore } from "vuex";
+export default {
+  setup() {
+    const store = useStore();
+    const userId = computed(() => store.state.auth.user);
+
+    const loadData = async () => {
+      await store.dispatch("user/GET_USER_PROFILE", { userId: 6 });
+    };
+
+    onMounted(() => {
+      loadData();
+    });
+  },
+};
 </script>
 <style lang="scss">
 .my-card {

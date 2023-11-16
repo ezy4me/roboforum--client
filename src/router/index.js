@@ -1,5 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+const isAuthenticated = function (to, from, next) {
+    if (localStorage.getItem('userRole') === 'USER') {
+        next()
+    }
+    else next({ name: 'main' })
+}
+
+
 const routes = [
     {
         path: '/',
@@ -9,7 +17,14 @@ const routes = [
     {
         path: '/account',
         name: 'account',
+        beforeEnter: isAuthenticated,
         component: () => import('../pages/AccountPage.vue'),
+    },
+    {
+        path: '/account/edit',
+        name: 'account-edit',
+        beforeEnter: isAuthenticated,
+        component: () => import('../pages/AccountEditPage.vue')
     },
     {
         path: '/forum-discussions',

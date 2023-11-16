@@ -5,6 +5,8 @@ const defaultConfig = {
     headers: {
         'Content-Type': 'application/json'
     },
+    withCredentials: true
+
 }
 
 export const DefaultAPIInstance = axios.create(defaultConfig)
@@ -12,9 +14,10 @@ export const DefaultAPIInstance = axios.create(defaultConfig)
 const loginConfig = {
     baseURL: import.meta.env.VITE_APP_API_URL,
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'authorization': localStorage.getItem('token')
     },
-    credentials: 'include'
+    withCredentials: true
 }
 
 export const LoginAPIInstance = axios.create(loginConfig)
@@ -22,8 +25,11 @@ export const LoginAPIInstance = axios.create(loginConfig)
 const formDataConfig = {
     baseURL: import.meta.env.VITE_APP_API_URL,
     headers: {
-        'Content-Type': 'multipart/form-data'
-    }
+        'Content-Type': 'multipart/form-data',
+        'authorization': localStorage.getItem('token')
+    },
+    withCredentials: true
+
 }
 
 

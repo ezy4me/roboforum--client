@@ -14,7 +14,7 @@ export const AuthAPI = {
     },
 
     logout() {
-        const url = import.meta.env.VITE_APP_AUTH_API_URL
-        return DefaultAPIInstance.post(url)
+        const url = import.meta.env.VITE_APP_AUTH_API_URL + "logout"
+        return DefaultAPIInstance.get(url)
     }
 }

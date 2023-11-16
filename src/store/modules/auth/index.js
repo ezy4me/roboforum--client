@@ -16,10 +16,10 @@ const getters = {
 
 const actions = {
     async ON_LOGIN({ commit }, { email, password }) {
-        return AuthAPI.login(email, password).then((res) => {
+        return await AuthAPI.login(email, password).then((res) => { 
             commit('setToken', res.data.accesToken);
-            commit('setUserRole', res.data.role);
-            commit('setUser', res.data.refreshToken.userId);
+            commit('setUserRole', res.data.user.role);
+            commit('setUser', res.data.user);
             LoginAPIInstance.defaults.headers['authorization'] = res.data.accesToken;
         })
             .catch((error) => {
@@ -29,7 +29,7 @@ const actions = {
     },
 
     async ON_REGISTRATION({ _ }, { username, email, password }) {
-        return AuthAPI.registration(username, email, password)
+        return await AuthAPI.registration(username, email, password)
             .catch((error) => {
                 console.log(error);
                 return error;
@@ -37,12 +37,13 @@ const actions = {
     },
 
     async ON_LOGOUT({ commit }) {
+        // return await AuthAPI.logout().then((res) => {
         commit('deleteToken');
         commit('deleteUserRole');
         commit('deleteUser');
         delete DefaultAPIInstance.defaults.headers['authorization'];
+        // })
     },
-
 }
 
 const mutations = {

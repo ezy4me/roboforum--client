@@ -1,15 +1,13 @@
 <template>
   <q-layout>
     <TheHeader />
-    <q-drawer show-if-above side="left" class="my-drawer">
-      <!-- drawer content -->
-    </q-drawer>
-    <q-page-container>
+    <!-- <q-drawer show-if-above side="left" class="my-drawer">
+    </q-drawer> -->
+    <q-page-container class="q-mx-md">
       <router-view />
     </q-page-container>
-    <q-drawer show-if-above side="right" class="my-drawer">
-      <!-- drawer content -->
-    </q-drawer>
+    <!-- <q-drawer show-if-above side="right" class="my-drawer">
+    </q-drawer> -->
   </q-layout>
   <VBackgroundStars />
 </template>

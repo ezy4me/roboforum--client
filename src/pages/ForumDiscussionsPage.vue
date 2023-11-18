@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page class="q-my-md">
     <div class="text-h6">Открытые обсуждения</div>
 
     <q-input v-model="text" label="Поиск" counter>

@@ -10,7 +10,7 @@
     <div class="col q-ml-md">
       <q-card flat class="my-card bg-negative">
         <q-card-section align="end">
-          <q-btn round color="indigo" size="0.84rem" icon="add" />
+          <q-btn @click="navigateTo('newProject')" round color="indigo" size="0.84rem" icon="add" />
         </q-card-section>
       </q-card>
     </div>
@@ -39,6 +39,7 @@
   </q-card>
 </template>
 <script>
+import { useNavigation } from "@/hooks/useNavigation";
 import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
 export default {
@@ -47,6 +48,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
+    const { navigateTo } = useNavigation();
 
     const userProjects = computed(() => store.state.user.userProjects);
 
@@ -62,6 +64,7 @@ export default {
 
     return {
       userProjects,
+      navigateTo
     };
   },
 };

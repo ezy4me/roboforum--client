@@ -41,7 +41,7 @@ import { useQuasar } from "quasar";
 import { reactive, ref } from "vue";
 
 export default {
-  setup() {
+  setup(props, { emit }) {
     const $q = useQuasar();
 
     const initialState = reactive({
@@ -52,9 +52,13 @@ export default {
     const state = reactive({ ...initialState });
 
     const onSubmit = () => {
-      store.dispatch("auth/ON_LOGIN", {
-        ...state,
-      });
+      store
+        .dispatch("auth/ON_LOGIN", {
+          ...state,
+        })
+        .then(() => {
+          emit("close");
+        });
     };
 
     const onReset = () => {

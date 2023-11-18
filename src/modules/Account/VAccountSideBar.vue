@@ -18,6 +18,12 @@
     <q-card flat class="my-card q-mb-md bg-negative">
       <q-card-section>
         <q-btn
+          @click="navigateTo('account')"
+          class="full-width q-mb-md bg-grey-10"
+          flat
+          label="Главная" />
+
+        <q-btn
           @click="navigateTo('accountEdit')"
           flat
           class="full-width q-mb-md bg-grey-10"
@@ -29,21 +35,16 @@
 </template>
 <script>
 import { computed } from "vue";
-import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-
+import { useNavigation } from "@/hooks/useNavigation";
 export default {
   setup() {
     const store = useStore();
-    const router = useRouter();
+    const { navigateTo } = useNavigation();
 
     const user = computed(
       () => store.state.auth.user || localStorage.getItem("user")
     );
-
-    const navigateTo = (routeName) => {
-      router.push({ name: routeName });
-    };
 
     const onLogout = async () => {
       await store.dispatch("auth/ON_LOGOUT").then(() => {

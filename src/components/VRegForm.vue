@@ -72,9 +72,13 @@ export default {
     };
 
     const onSubmit = () => {
-      store.dispatch("auth/ON_REGISTRATION", {
-        ...state,
-      });
+      store
+        .dispatch("auth/ON_REGISTRATION", {
+          ...state,
+        })
+        .then(() => {
+          emit("close");
+        });
     };
 
     return {

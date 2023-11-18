@@ -42,6 +42,10 @@
         </a>
       </div>
 
+      <div v-if="user">
+        {{ user.email }}
+      </div>
+
       <div v-if="user" class="q-pl-sm q-gutter-sm row items-center no-wrap">
         <q-btn
           v-if="$q.screen.gt.xs"
@@ -79,7 +83,9 @@
             <q-list dense>
               <q-item class="GL__menu-link-signed-in">
                 <q-item-section>
-                  <div>Привет, <strong>User</strong></div>
+                  <div>
+                    Привет, <strong>{{ user.username }}</strong>
+                  </div>
                 </q-item-section>
               </q-item>
               <q-separator />
@@ -101,10 +107,10 @@
     </q-toolbar>
   </q-header>
   <q-dialog v-model="isAuthDialog">
-    <VAuthForm></VAuthForm>
+    <VAuthForm @close="closeDialog"></VAuthForm>
   </q-dialog>
   <q-dialog v-model="isRegDialog">
-    <VRegForm></VRegForm>
+    <VRegForm @close="closeDialog"></VRegForm>
   </q-dialog>
 </template>
 <script>
@@ -129,10 +135,6 @@ export default {
         name: "Сообщество",
         route: "forum-community",
       },
-      // {
-      //   name: "Магазин",
-      //   route: "shop",
-      // },
       {
         name: "Поддержка",
         route: "main",
@@ -152,10 +154,6 @@ export default {
         route: "main",
       },
       {
-        name: "Ваши товары",
-        route: "main",
-      },
-      {
         name: "Помощь",
         route: "main",
       },
@@ -168,11 +166,17 @@ export default {
     const isAuthDialog = ref(false);
     const isRegDialog = ref(false);
 
+    const closeDialog = () => {
+      isAuthDialog.value = false;
+      isRegDialog.value = false;
+    };
+
     const user = computed(() => store.state.auth.user);
 
     const goToPage = (link) => {
       router.push({ name: link.route });
     };
+
     return {
       headerLinks,
       accountLinks,
@@ -180,6 +184,7 @@ export default {
       isAuthDialog,
       isRegDialog,
       user,
+      closeDialog,
     };
   },
 };

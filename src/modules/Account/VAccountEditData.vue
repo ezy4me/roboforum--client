@@ -51,6 +51,15 @@
       <div class="col">
         <q-card flat class="my-card bg-negative">
           <q-card-section>
+            <q-input filled v-model="state.bio" label="BIO" :dense="dense" />
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
+    <div class="row q-mb-md">
+      <div class="col">
+        <q-card flat class="my-card bg-negative">
+          <q-card-section>
             <q-input
               filled
               v-model="state.company"
@@ -116,10 +125,12 @@ export default {
     const store = useStore();
 
     const user = computed(() => store.state.auth.user);
+    const userProfile = computed(() => store.state.user.userProfile);
 
     const initialState = reactive({
       username: "",
       email: "",
+      bio: "",
       name: "",
       company: "",
       location: "",
@@ -129,13 +140,28 @@ export default {
     const state = reactive({ ...initialState });
 
     const loadData = async () => {
-      await store.dispatch("user/GET_USER_PROFILE", {
-        userId: user.value.userId,
-      });
+      await store
+        .dispatch("user/GET_USER_PROFILE", {
+          userId: user.value.userId,
+        })
+        .then(() => {
+          state.username = user.value.username;
+          state.email = user.value.email;
+          state.bio = userProfile.value.bio;
+          state.name = userProfile.value.name;
+          state.company = userProfile.value.company;
+          state.location = userProfile.value.location;
+        });
     };
 
     const onSave = async () => {
-      ///
+      await store.dispatch("user/UPDATE_USER_PROFILE", {
+        userId: user.value.userId,
+        name: state.name,
+        bio: state.bio,
+        company: state.company,
+        location: state.location,
+      });
     };
 
     onMounted(() => {

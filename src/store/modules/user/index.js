@@ -23,6 +23,17 @@ const actions = {
             })
     },
 
+    async UPDATE_USER_PROFILE({ commit }, { userId, name, bio, company, location }) {
+        return UserAPI.updateUserProfile(userId, name, bio, company, location).then((res) => {
+            console.log(res.data);
+            commit('setUserProfile', res.data)
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
     async GET_USER_PROJECTS({ commit }, { userId }) {
         return UserAPI.getUserProjects(userId).then((res) => {
             console.log(res.data);
@@ -38,7 +49,7 @@ const actions = {
 
 const mutations = {
     setUserProfile(state, userProfile) {
-        state.userProjects = userProfile;
+        state.userProfile = userProfile;
         localStorage.setItem('userProfile', JSON.stringify(userProfile));
     },
 

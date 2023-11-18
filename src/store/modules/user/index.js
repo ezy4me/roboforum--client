@@ -3,10 +3,12 @@ import { UserAPI } from "@/http/userApi";
 
 const state = {
     userProfile: null,
+    userProjects: null,
 }
 
 const getters = {
     getUserProfile: (state) => state.userProfile,
+    getUserProjects: (state) => state.userProjects,
 }
 
 const actions = {
@@ -21,13 +23,29 @@ const actions = {
             })
     },
 
+    async GET_USER_PROJECTS({ commit }, { userId }) {
+        return UserAPI.getUserProjects(userId).then((res) => {
+            console.log(res.data);
+            commit('setUserProjects', res.data)
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
 }
 
 const mutations = {
     setUserProfile(state, userProfile) {
-        state.userProfile = null;
+        state.userProjects = userProfile;
         localStorage.setItem('userProfile', JSON.stringify(userProfile));
     },
+
+    setUserProjects(state, userProjects) {
+        state.userProjects = userProjects;
+        localStorage.setItem('userProjects', JSON.stringify(userProjects));
+    }
 }
 
 export default {

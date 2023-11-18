@@ -69,28 +69,12 @@ export default {
       state.username = "";
       state.email = "";
       state.password = "";
-      accept.value = false;
     };
 
     const onSubmit = () => {
-      if (!accept.value) {
-        $q.notify({
-          color: "red-5",
-          textColor: "white",
-          icon: "warning",
-          message: "Вам нужно подтвердить регистрацию",
-        });
-      } else {
-        // $q.notify({
-        //   color: "green-4",
-        //   textColor: "white",
-        //   icon: "cloud_done",
-        //   message: "Вы успешно зарегистрированы",
-        // });
-        store.dispatch("auth/ON_REGISTRATION", {
-          ...state,
-        });
-      }
+      store.dispatch("auth/ON_REGISTRATION", {
+        ...state,
+      });
     };
 
     return {
@@ -98,7 +82,7 @@ export default {
       accept,
       onReset,
       onSubmit,
-      $q
+      $q,
     };
   },
 };

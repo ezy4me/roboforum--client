@@ -18,13 +18,22 @@ const routes = [
         path: '/account',
         name: 'account',
         beforeEnter: isAuthenticated,
-        component: () => import('../pages/AccountPage.vue'),
-    },
-    {
-        path: '/account/edit',
-        name: 'account-edit',
-        beforeEnter: isAuthenticated,
-        component: () => import('../pages/AccountEditPage.vue')
+        component: () => import('../modules/Account/AccountPage.vue'),
+        children: [
+            {
+                path: 'body',
+                name: 'accountBody',
+                beforeEnter: isAuthenticated,
+                component: () => import('../modules/Account/VAccountBody.vue'),
+            },
+            {
+                path: 'edit',
+                name: 'accountEdit',
+                beforeEnter: isAuthenticated,
+                component: () => import('../modules/Account/VAccountEditData.vue'),
+            }
+        ],
+        redirect: '/account/body'
     },
     {
         path: '/forum-discussions',

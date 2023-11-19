@@ -45,6 +45,16 @@ const actions = {
             })
     },
 
+    async POST_USER_PROJECT({ _ }, { userId, title, description, projectTypeId, projectFiles }) {
+        return UserAPI.postUserProject(userId, title, description, projectTypeId, projectFiles).then((res) => {
+            console.log(res.data);
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
 }
 
 const mutations = {

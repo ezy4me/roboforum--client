@@ -2,7 +2,7 @@
   <div
     class="col q-mr-md"
     style="overflow: auto; min-width: 25%; max-width: 25%">
-    <q-card flat class="my-card q-mb-md bg-negative">
+    <q-card flat class="q-mb-md bg-negative">
       <q-card-section>
         <q-img
           src="/alien.jpg"
@@ -15,7 +15,7 @@
         </q-img>
       </q-card-section>
     </q-card>
-    <q-card flat class="my-card q-mb-md bg-negative">
+    <q-card flat class="q-mb-md bg-negative">
       <q-card-section>
         <q-btn
           @click="navigateTo('account')"

@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <q-card flat class="my-card full-width q-pb-md">
+    <q-card flat class=" full-width q-pb-md">
       <q-card-section>
         <div class="text-h6">Оставить комментарий:</div>
       </q-card-section>

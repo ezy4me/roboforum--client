@@ -1,14 +1,14 @@
 <template>
   <div class="row q-mb-md">
     <div class="col">
-      <q-card flat class="my-card bg-negative">
+      <q-card flat class="bg-negative">
         <q-card-section>
           <div class="text-h4 text-uppercase">Проекты</div>
         </q-card-section>
       </q-card>
     </div>
     <div class="col q-ml-md">
-      <q-card flat class="my-card bg-negative">
+      <q-card flat class="bg-negative">
         <q-card-section align="end">
           <q-btn @click="navigateTo('newProject')" round color="indigo" size="0.84rem" icon="add" />
         </q-card-section>

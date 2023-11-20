@@ -1,5 +1,5 @@
 <template>
-  <q-card flat class="my-card full-width q-pa-md">
+  <q-card flat class="full-width q-pa-md">
     <q-card-section class="bg-grey-10">
       <div class="text-h6">{{ comment.user.username }}</div>
       <div class="text-body1">{{ comment.comment }}</div>

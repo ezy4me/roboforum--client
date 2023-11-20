@@ -4,7 +4,7 @@
     style="overflow: auto; min-width: auto; height: 90vh">
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <div class="text-h4 text-uppercase">Информация профиля</div>
           </q-card-section>
@@ -13,7 +13,7 @@
     </div>
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-input
               disable
@@ -27,7 +27,7 @@
     </div>
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-input
               filled
@@ -40,7 +40,7 @@
     </div>
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-input filled v-model="state.name" label="Name" :dense="dense" />
           </q-card-section>
@@ -49,7 +49,7 @@
     </div>
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-input filled v-model="state.bio" label="BIO" :dense="dense" />
           </q-card-section>
@@ -58,7 +58,7 @@
     </div>
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-input
               filled
@@ -71,7 +71,7 @@
     </div>
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-input
               filled
@@ -84,7 +84,7 @@
     </div>
     <div class="row q-mb-md" v-for="(link, index) in state.links" :key="index">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-input
               filled
@@ -95,7 +95,7 @@
         </q-card>
       </div>
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-select
               filled

@@ -7,7 +7,7 @@
           :bar-style="barStyle"
           class="col"
           style="overflow: auto; min-width: auto; height: 90vh">
-          <q-card v-if="project" class="my-card q-mb-md bg-negative" flat>
+          <q-card v-if="project" class="q-mb-md bg-negative" flat>
             <q-card-section horizontal class="bg-grey-10">
               <q-card-section class="q-pt-xs">
                 <div class="text-h4 q-mt-sm q-mb-xs">{{ project.title }}</div>

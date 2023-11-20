@@ -24,7 +24,7 @@
               fit="cover"
               v-for="(i, index) in project.projectFiles"
               :key="index"
-              :src="'http://localhost:3000/uploads/' + i.file"
+              :src="`${VITE_APP_API_URL}/uploads/${i.file}`"
               no-native-menu>
             </q-img>
 
@@ -69,6 +69,7 @@ export default {
     return {
       projectId: ref(props.projectId),
       project,
+      VITE_APP_API_URL: import.meta.env.VITE_APP_API_URL,
     };
   },
   components: { VCommentsWall },

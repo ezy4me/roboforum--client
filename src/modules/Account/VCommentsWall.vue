@@ -36,7 +36,7 @@ export default {
     const store = useStore();
 
     const initialState = reactive({
-      userId: store.state.auth.user.userId || "",
+      userId: store.state.auth.user?.userId || "",
       comment: "",
       projectId: props.projectId,
     });
@@ -54,13 +54,19 @@ export default {
     };
 
     const onSubmit = async () => {
-      await store
+      if(state.userId){
+        await store
         .dispatch("project/POST_PROJECT_COMMENT", {
           ...state,
         })
         .then(() => {
           loadData();
         });
+      }
+      else {
+        alert('Авторизируйся')
+      }
+     
     };
 
     onMounted(() => {

@@ -1,5 +1,8 @@
 <template>
-  <q-header class="text-white bg-negative" height-hint="61.59">
+  <q-header
+    :class="{ 'modal-open': isAuthDialog || isRegDialog }"
+    class="text-white bg-negative"
+    height-hint="61.59">
     <q-toolbar class="q-py-sm q-px-md">
       <router-link to="/">
         <q-btn
@@ -230,4 +233,7 @@ export default {
     width: 450px !important
     .q-field__append
       display: none
+
+.q-body--force-scrollbar-y
+  overflow-y: hidden !important
 </style>

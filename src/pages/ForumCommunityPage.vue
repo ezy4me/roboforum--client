@@ -22,6 +22,7 @@
             v-for="(project, index) in publicProjects"
             :key="index"
             class="my-card q-mb-md bg-negative"
+            @click="navigateTo('project', { projectId: project.id })"
             flat>
             <q-card-section horizontal>
               <q-card-section class="q-pt-xs">
@@ -51,11 +52,13 @@
   </q-page>
 </template>
 <script>
+import { useNavigation } from "@/hooks/useNavigation";
 import { onMounted, ref, computed } from "vue";
 import { useStore } from "vuex";
 export default {
   setup() {
     const store = useStore();
+    const { navigateTo } = useNavigation();
     const publicProjects = computed(() => store.state.project.publicProjects);
     const text = ref();
 
@@ -70,6 +73,7 @@ export default {
     return {
       publicProjects,
       text,
+      navigateTo,
       thumbStyle: {
         right: "4px",
         borderRadius: "5px",

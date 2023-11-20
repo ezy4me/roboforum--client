@@ -20,6 +20,7 @@
     v-for="(project, index) in userProjects"
     :key="index"
     class="my-card q-mb-md bg-grey-10"
+    @click="navigateTo('project', {projectId: project.id})"
     flat>
     <q-card-section horizontal>
       <q-card-section class="q-pt-xs">
@@ -30,7 +31,7 @@
 
     <q-separator />
 
-    <q-card-actions align="right">
+    <q-card-actions align="left">
       <q-btn flat round icon="event" />
       <q-btn flat>
         {{ new Date(project.date).toLocaleDateString("ru") }}

@@ -44,6 +44,7 @@
           <q-card-section>
             <q-file
               filled
+              multiple
               v-model="state.projectFiles"
               label="Файлы для загрузки">
               <template v-slot:prepend>

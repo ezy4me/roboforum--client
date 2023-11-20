@@ -30,7 +30,7 @@
 
     <q-separator />
 
-    <q-card-actions align="right">
+    <q-card-actions align="left">
       <q-btn flat round icon="event" />
       <q-btn flat> {{ new Date().toLocaleDateString("ru") }} </q-btn>
     </q-card-actions>

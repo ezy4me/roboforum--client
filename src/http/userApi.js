@@ -26,7 +26,11 @@ export const UserAPI = {
         formData.append('description', description)
         formData.append('projectTypeId', projectTypeId)
         formData.append('userId', userId)
-        formData.append('projectFiles', projectFiles)
+        projectFiles.forEach((file, index) => {
+            formData.append('projectFiles', file);
+        });
+
+        console.log(projectFiles);
 
         return FormDataAPIInstance.post(url, formData)
     }

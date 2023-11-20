@@ -51,6 +51,12 @@ const routes = [
         name: 'forum-community',
         component: () => import('../pages/ForumCommunityPage.vue'),
     },
+    {
+        path: '/project/:projectId',
+        name: 'project',
+        props: true,
+        component: () => import('../modules/Account/VProjectInfo.vue'),
+    },
 ];
 
 const router = createRouter({

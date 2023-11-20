@@ -65,7 +65,9 @@
           <q-menu :offset="[0, 10]" auto-close>
             <q-list dense style="min-width: 100px">
               <q-item clickable class="GL__menu-link">
-                <q-item-section>Новый проект</q-item-section>
+                <q-item-section @click="navigateTo('newProject')"
+                  >Новый проект</q-item-section
+                >
               </q-item>
               <q-item clickable class="GL__menu-link">
                 <q-item-section>Новое обсуждение</q-item-section>
@@ -94,11 +96,11 @@
                 clickable
                 class="GL__menu-link"
                 v-for="(link, index) in accountLinks"
-                @click="goToPage(link)">
+                @click="navigateTo(link.route)">
                 <q-item-section>{{ link.name }}</q-item-section>
               </q-item>
               <q-item clickable class="GL__menu-link bg-red">
-                <q-item-section>Выход</q-item-section>
+                <q-item-section @click="onLogout">Выход</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
@@ -119,6 +121,7 @@ import { useRouter } from "vue-router";
 import VAuthForm from "../components/VAuthForm.vue";
 import VRegForm from "../components/VRegForm.vue";
 import { useStore } from "vuex";
+import { useNavigation } from "@/hooks/useNavigation";
 export default {
   components: { VAuthForm, VRegForm },
   name: "TheHeader",
@@ -126,6 +129,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const { navigateTo } = useNavigation();
     const headerLinks = reactive([
       {
         name: "Обсуждения",
@@ -173,18 +177,21 @@ export default {
 
     const user = computed(() => store.state.auth.user);
 
-    const goToPage = (link) => {
-      router.push({ name: link.route });
+    const onLogout = async () => {
+      await store.dispatch("auth/ON_LOGOUT").then(() => {
+        location.reload();
+      });
     };
 
     return {
       headerLinks,
       accountLinks,
-      goToPage,
       isAuthDialog,
       isRegDialog,
       user,
       closeDialog,
+      navigateTo,
+      onLogout,
     };
   },
 };

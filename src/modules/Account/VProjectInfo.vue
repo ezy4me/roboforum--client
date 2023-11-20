@@ -8,14 +8,25 @@
           class="col"
           style="overflow: auto; min-width: auto; height: 90vh">
           <q-card v-if="project" class="my-card q-mb-md bg-negative" flat>
-            <q-card-section horizontal>
+            <q-card-section horizontal class="bg-grey-10">
               <q-card-section class="q-pt-xs">
-                <div class="text-h5 q-mt-sm q-mb-xs">{{ project.title }}</div>
-                <div class="text-caption text-grey">
+                <div class="text-h4 q-mt-sm q-mb-xs">{{ project.title }}</div>
+                <div class="text-body1">
                   {{ project.description }}
                 </div>
               </q-card-section>
             </q-card-section>
+
+            <q-separator />
+
+            <q-img
+              class="q-ma-md"
+              fit="cover"
+              v-for="(i, index) in project.projectFiles"
+              :key="index"
+              :src="'http://localhost:3000/uploads/' + i.file"
+              no-native-menu>
+            </q-img>
 
             <q-separator />
 
@@ -24,22 +35,11 @@
               <q-btn flat>
                 {{ new Date(project.date).toLocaleDateString("ru") }}
               </q-btn>
+              <q-separator vertical class="q-mx-md" />
+              <div class="text-body1">{{ project.user.username }}</div>
             </q-card-actions>
-            <q-img
-            class="q-ma-md"
-              fit="cover"
-              v-for="(i, index) in project.projectFiles"
-              :key="index"
-              :src="'http://localhost:3000/uploads/' + i.file"
-              no-native-menu>
-            </q-img>
           </q-card>
-          <div class="row">
-            <div class="q-pa-md full-width">
-            <div class="text-h5 q-mb-md">Оставить комментарий</div>
-              <q-input v-model="text" filled type="textarea" />
-            </div>
-          </div>
+          <VCommentsWall :projectId="projectId" />
         </q-scroll-area>
       </div>
     </div>
@@ -47,8 +47,9 @@
 </template>
 
 <script>
-import { onUpdated, onMounted, computed, ref } from "vue";
+import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
+import VCommentsWall from "./VCommentsWall.vue";
 
 export default {
   props: {
@@ -57,22 +58,20 @@ export default {
   setup(props) {
     const store = useStore();
     const project = computed(() => store.state.project.project);
-
     const loadData = async () => {
       await store.dispatch("project/GET_ONE_PROJECT", {
         projectId: props.projectId,
       });
     };
-
     onMounted(() => {
       loadData();
     });
-
     return {
       projectId: ref(props.projectId),
       project,
     };
   },
+  components: { VCommentsWall },
 };
 </script>
 

@@ -1,12 +1,15 @@
 import { ProjectAPI } from "@/http/projectApi";
 const state = {
     publicProjects: null,
-    project: null
+    project: null,
+    projectsComments: null,
+
 }
 
 const getters = {
     getPublicProjects: (state) => state.publicProjects,
     getProject: (state) => state.project,
+    getProjectComments: (state) => state.projectsComments,
 }
 
 const actions = {
@@ -32,6 +35,27 @@ const actions = {
             })
     },
 
+    async GET_PROJECT_COMMENTS({ commit }, { projectId }) {
+        return await ProjectAPI.getProjectComments(projectId).then((res) => {
+            console.log(res.data);
+            commit('setProjectComments', res.data)
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
+    async POST_PROJECT_COMMENT({ _ }, { projectId, userId, comment }) {
+        return await ProjectAPI.postProjectComment(projectId, userId, comment).then((res) => {
+            console.log(res.data);
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
 }
 
 const mutations = {
@@ -43,6 +67,11 @@ const mutations = {
     setProject(state, project) {
         state.project = project;
         localStorage.setItem('project', JSON.stringify(project));
+    },
+
+    setProjectComments(state, projectComments) {
+        state.projectComments = projectComments;
+        localStorage.setItem('projectComments', JSON.stringify(projectComments));
     }
 }
 

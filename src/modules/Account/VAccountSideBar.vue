@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="col q-mr-md"
-    style="overflow: auto; min-width: 25%; max-width: 25%">
+  <div class="col q-mr-md account-sidebar">
     <q-card flat class="q-mb-md bg-negative">
       <q-card-section>
         <q-img
@@ -60,4 +58,17 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style lang="scss" scoped>
+.account-sidebar {
+  overflow: auto;
+  min-width: 25%;
+  max-width: 25%;
+}
+
+@media screen and (max-width: 1023px) {
+  .account-sidebar {
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
+</style>

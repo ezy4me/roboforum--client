@@ -1,16 +1,21 @@
 <template>
   <div class="row q-mb-md">
-    <div class="col">
+    <div class="col-8">
       <q-card flat class="bg-negative">
         <q-card-section>
-          <div class="text-h4 text-uppercase">Проекты</div>
+          <div class="text-h6 text-uppercase">Проекты</div>
         </q-card-section>
       </q-card>
     </div>
     <div class="col q-ml-md">
       <q-card flat class="bg-negative">
         <q-card-section align="end">
-          <q-btn @click="navigateTo('newProject')" round color="indigo" size="0.84rem" icon="add" />
+          <q-btn
+            @click="navigateTo('newProject')"
+            round
+            color="indigo"
+            size="0.66rem"
+            icon="add" />
         </q-card-section>
       </q-card>
     </div>
@@ -20,7 +25,7 @@
     v-for="(project, index) in userProjects"
     :key="index"
     class="my-card q-mb-md bg-grey-10"
-    @click="navigateTo('project', {projectId: project.id})"
+    @click="navigateTo('project', { projectId: project.id })"
     flat>
     <q-card-section horizontal>
       <q-card-section class="q-pt-xs">
@@ -65,7 +70,7 @@ export default {
 
     return {
       userProjects,
-      navigateTo
+      navigateTo,
     };
   },
 };

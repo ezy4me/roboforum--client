@@ -27,13 +27,29 @@
     </div>
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="bg-negative">
+        <q-card flat horizontal class="bg-negative">
           <q-card-section>
             <q-input
               filled
               v-model="state.username"
               label="Username"
               :dense="dense" />
+          </q-card-section>
+          <q-card-actions align="center" class="q-mx-sm">
+            <q-btn
+              @click="onSave"
+              class="full-width"
+              color="indigo"
+              label="Сохранить" />
+          </q-card-actions>
+        </q-card>
+      </div>
+    </div>
+    <div class="row q-mb-md">
+      <div class="col">
+        <q-card flat class="bg-negative">
+          <q-card-section>
+            <div class="text-h4 text-uppercase">Личная информация</div>
           </q-card-section>
         </q-card>
       </div>
@@ -97,11 +113,11 @@
       <div class="col">
         <q-card flat class="bg-negative">
           <q-card-section>
-            <q-select
+            <q-input
               filled
-              v-model="single"
-              :options="options"
-              label="Single" />
+              v-model="state.links[index].resource"
+              label="Resource"
+              :dense="dense" />
           </q-card-section>
         </q-card>
       </div>
@@ -134,7 +150,10 @@ export default {
       name: "",
       company: "",
       location: "",
-      links: [{ link: "" }, { link: "" }],
+      links: [
+        { link: "", resource: "" },
+        { link: "", resource: "" },
+      ],
     });
 
     const state = reactive({ ...initialState });
@@ -168,7 +187,10 @@ export default {
       loadData();
     });
 
-    return { state, onSave };
+    return {
+      state,
+      onSave,
+    };
   },
 };
 </script>

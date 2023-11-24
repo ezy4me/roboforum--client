@@ -32,8 +32,6 @@
             (val) => (val && val.length > 0) || 'Поле не должно быть пустым',
           ]" />
 
-        <q-toggle v-model="accept" label="Подтвердить регистрацию" />
-
         <div>
           <q-btn
             class="full-width"
@@ -52,7 +50,7 @@ import { ref, reactive } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  setup() {
+  setup(props, { emit }) {
     const $q = useQuasar();
     const store = useStore();
 

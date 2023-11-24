@@ -4,7 +4,7 @@
     style="overflow: auto; min-width: auto; height: 90vh">
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <div class="text-h4 text-uppercase">Создание проекта</div>
           </q-card-section>
@@ -13,7 +13,7 @@
     </div>
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-input
               filled
@@ -26,7 +26,7 @@
     </div>
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-input
               filled
@@ -40,7 +40,7 @@
     </div>
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-file
               filled
@@ -57,7 +57,7 @@
     </div>
     <div class="row q-mb-md">
       <div class="col">
-        <q-card flat class="my-card bg-negative">
+        <q-card flat class="bg-negative">
           <q-card-section>
             <q-radio
               class="q-mr-md"
@@ -109,7 +109,7 @@ export default {
 
     return {
       state,
-      onSubmit
+      onSubmit,
     };
   },
 };

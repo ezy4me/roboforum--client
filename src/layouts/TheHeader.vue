@@ -17,9 +17,9 @@
 
       <div
         v-if="$q.screen.gt.sm"
-        class="GL__toolbar-link q-ml-xs q-gutter-md text-body2 text-weight-bold row items-center no-wrap">
+        class="GL__toolbar-link q-ml-xs q-gutter-md text-body2 row items-center no-wrap">
         <router-link
-          class="bg-indigo rounded-borders q-pa-sm"
+          class="q-pa-sm"
           v-for="(link, index) in headerLinks"
           :key="index"
           :to="{ name: link.route }"
@@ -30,8 +30,8 @@
       <q-space />
 
       <div
-        v-if="$q.screen.gt.sm && !user"
-        class="GL__toolbar-link q-ml-xs q-gutter-md text-body2 text-weight-bold row items-center no-wrap">
+        v-if="!user"
+        class="GL__toolbar-link q-ml-xs q-gutter-md text-body2  row items-center no-wrap">
         <a
           href="javascript:void(0)"
           @click="isAuthDialog = true"
@@ -42,10 +42,9 @@
           href="javascript:void(0)"
           @click="isRegDialog = true"
           class="text-white">
-          Зарегистрироваться
+          Регистрация
         </a>
       </div>
-
       <div v-if="user">
         {{ user.email }}
       </div>
@@ -104,6 +103,17 @@
         </q-btn>
       </div>
     </q-toolbar>
+    <div
+      v-if="!$q.screen.gt.sm"
+      class="GL__toolbar-link q-ml-xs q-gutter-md text-body2 row items-center justify-center wrap q-mb-md">
+      <router-link
+        class="q-pa-sm"
+        v-for="(link, index) in headerLinks"
+        :key="index"
+        :to="{ name: link.route }"
+        >{{ link.name }}</router-link
+      >
+    </div>
   </q-header>
   <q-dialog v-model="isAuthDialog">
     <VAuthForm @close="closeDialog"></VAuthForm>

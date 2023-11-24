@@ -7,9 +7,7 @@
         <div class="col">
           <q-card flat class="bg-negative">
             <q-card-section>
-              <div class="text-h5 text-uppercase">
-                1. Форма Обратной Связи 📝
-              </div>
+              <div class="text-h5 text-uppercase">Форма Обратной Связи 📝</div>
             </q-card-section>
             <q-card-section>
               Не нашли ответ на ваш вопрос в FAQ? Оставьте нам сообщение через
@@ -24,7 +22,7 @@
         <div class="col">
           <q-card flat class="bg-negative">
             <q-card-section>
-              <div class="text-h5 text-uppercase">2. Электронная Почта ✉️</div>
+              <div class="text-h5 text-uppercase">Электронная Почта ✉️</div>
             </q-card-section>
             <q-card-section>
               Напишите нам на support@robotforum.com, и наша команда поддержки
@@ -38,7 +36,7 @@
         <div class="col">
           <q-card flat class="bg-negative">
             <q-card-section>
-              <div class="text-h5 text-uppercase">3. Социальные Сети 🌐</div>
+              <div class="text-h5 text-uppercase">Социальные Сети 🌐</div>
             </q-card-section>
             <q-card-section>
               Следите за нами в социальных сетях, чтобы быть в курсе последних

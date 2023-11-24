@@ -19,6 +19,7 @@ const routes = [
         name: 'support',
         component: () => import('../pages/SupportPage.vue'),
     },
+
     {
         path: '/account',
         name: 'account',

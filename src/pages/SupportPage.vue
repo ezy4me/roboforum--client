@@ -62,7 +62,10 @@
               </q-item>
               <q-item clickable v-ripple>
                 <q-item-section avatar>
-                  <q-avatar color="red" text-color="white" icon="smart_display" />
+                  <q-avatar
+                    color="red"
+                    text-color="white"
+                    icon="smart_display" />
                 </q-item-section>
                 <q-item-section>Наш YouTube</q-item-section>
               </q-item>
@@ -70,10 +73,88 @@
           </q-card>
         </div>
       </div>
+
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-card flat class="bg-negative">
+            <q-card-section>
+              <div class="text-h5 text-uppercase">
+                Часто задаваемые вопросы (FAQ)
+              </div>
+            </q-card-section>
+          </q-card>
+        </div>
+      </div>
+
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-list bordered class="rounded-borders">
+            <q-expansion-item
+              v-for="(q, index) in faq"
+              :key="index"
+              expand-separator
+              :icon="q.icon"
+              :label="q.question">
+              <q-card>
+                <q-card-section>
+                  {{ q.answer }}
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-list>
+        </div>
+      </div>
     </q-scroll-area>
   </q-page>
 </template>
 <script>
-export default {};
+import { reactive } from "vue";
+export default {
+  setup() {
+    const faq = reactive([
+      {
+        icon: "looks_one",
+        question: "Как зарегистрироваться на нашем форуме?",
+        answer:
+          "Для регистрации просто перейдите на страницу входа, нажмите 'Зарегистрироваться', и заполните необходимую информацию. После завершения регистрации, вы сможете создавать проекты и участвовать в обсуждениях.",
+      },
+      {
+        icon: "looks_two",
+        question: "Как создать новый проект?",
+        answer:
+          "После входа в свой аккаунт, перейдите на страницу 'Мои проекты' и нажмите 'Создать проект'. Заполните необходимую информацию о вашем проекте, добавьте изображения или файлы, и сохраните проект.",
+      },
+      {
+        icon: "looks_3",
+        question: "Могу ли я комментировать проекты других участников?",
+        answer:
+          "Да, конечно! Мы поддерживаем активное взаимодействие в сообществе. После просмотра проекта другого участника, просто оставьте комментарий с вашим мнением или вопросом.",
+      },
+      {
+        icon: "looks_4",
+        question: "Как изменить информацию в своем профиле?",
+        answer:
+          "Перейдите на страницу своего профиля и нажмите 'Редактировать профиль'. Здесь вы можете обновить информацию о себе, добавить аватар, и изменить другие настройки.",
+      },
+      {
+        icon: "looks_5",
+        question: "Как связаться с администрацией форума в случае проблемы?",
+        answer:
+          "Для связи с администрацией используйте раздел 'Поддержка'. Там вы найдете форму обратной связи, где можете описать свою проблему или вопрос. Мы постараемся ответить в кратчайшие сроки.",
+      },
+      {
+        icon: "looks_6",
+        question:
+          "Могу ли я использовать форум для поиска партнеров или коллег по проектам?",
+        answer:
+          "Да, форум поддерживает объединение участников для совместных проектов. Вы можете создать обсуждение или присоединиться к существующему, чтобы найти интересных партнеров и начать совместную работу.",
+      },
+    ]);
+
+    return {
+      faq,
+    };
+  },
+};
 </script>
 <style lang=""></style>

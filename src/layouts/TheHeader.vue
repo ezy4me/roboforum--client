@@ -78,7 +78,7 @@
             <img src="/avatar.png" />
           </q-avatar>
 
-          <q-menu :offset="[0, 10]" auto-close>
+          <q-menu :offset="[0, 10]" auto-close style="min-width: 200px">
             <q-list dense>
               <q-item class="GL__menu-link-signed-in">
                 <q-item-section>
@@ -138,10 +138,6 @@ export default {
       },
       {
         name: "Поддержка",
-        route: "support",
-      },
-      {
-        name: "FAQ",
         route: "support",
       },
     ]);

@@ -5,7 +5,7 @@
       style="overflow: auto; min-width: auto; height: 90vh">
       <q-timeline color="secondary" class="q-pa-md bg-grey-10 rounded-borders">
         <q-timeline-entry heading class="text-center">
-          RobotForum: ваше пространство для робототехники и инноваций!
+          RobotForum
         </q-timeline-entry>
 
         <q-timeline-entry icon="start">

@@ -1,5 +1,3 @@
-// FILE: main.js
-
 import { createApp } from 'vue'
 import { Quasar } from 'quasar'
 import quasarLang from 'quasar/lang/ru'
@@ -7,6 +5,7 @@ import quasarLang from 'quasar/lang/ru'
 // Import icon libraries
 import '@quasar/extras/roboto-font/roboto-font.css'
 import '@quasar/extras/material-icons/material-icons.css'
+import '@quasar/extras/fontawesome-v6'
 
 // Import Quasar css
 import 'quasar/src/css/index.sass'
@@ -24,11 +23,13 @@ const myApp = createApp(App)
 
 
 myApp.use(Quasar, {
-    plugins: {}, // import Quasar plugins and add here
+    plugins: {},
     lang: quasarLang,
+    extras: [
+        'fontawesome-v6',
+    ]
 })
 
-// Assumes you have a <div id="app"></div> in your index.html
 myApp
     .use(router)
     .use(store)

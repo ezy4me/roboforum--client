@@ -19,6 +19,7 @@
         v-if="$q.screen.gt.sm"
         class="GL__toolbar-link q-ml-xs q-gutter-md text-body2 text-weight-bold row items-center no-wrap">
         <router-link
+          class="bg-indigo rounded-borders q-pa-sm"
           v-for="(link, index) in headerLinks"
           :key="index"
           :to="{ name: link.route }"
@@ -50,13 +51,6 @@
       </div>
 
       <div v-if="user" class="q-pl-sm q-gutter-sm row items-center no-wrap">
-        <q-btn
-          v-if="$q.screen.gt.xs"
-          dense
-          flat
-          round
-          size="sm"
-          icon="notifications" />
         <q-btn v-if="$q.screen.gt.xs" dense flat>
           <div class="row items-center no-wrap">
             <q-icon name="add" size="20px" />
@@ -144,7 +138,11 @@ export default {
       },
       {
         name: "Поддержка",
-        route: "main",
+        route: "support",
+      },
+      {
+        name: "FAQ",
+        route: "support",
       },
     ]);
     const accountLinks = reactive([

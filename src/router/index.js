@@ -15,6 +15,11 @@ const routes = [
         component: () => import('../pages/MainPage.vue'),
     },
     {
+        path: '/support',
+        name: 'support',
+        component: () => import('../pages/SupportPage.vue'),
+    },
+    {
         path: '/account',
         name: 'account',
         beforeEnter: isAuthenticated,

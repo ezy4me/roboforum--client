@@ -1,8 +1,7 @@
 <template>
   <q-page class="my-page q-py-md">
     <q-scroll-area
-      class="col"
-      style="overflow: auto; min-width: auto; height: 90vh">
+      class="col my-scroll">
       <q-timeline color="secondary" class="q-pa-md bg-grey-10 rounded-borders">
         <q-timeline-entry heading class="text-center">
           RobotForum

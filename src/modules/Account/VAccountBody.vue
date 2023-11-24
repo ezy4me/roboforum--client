@@ -1,8 +1,6 @@
 <template>
-  <q-scroll-area
-    class="col"
-    style="overflow: auto; min-width: auto; height: 90vh">
-    <v-account-projects :userId="user.userId"/>
+  <q-scroll-area class="col my-scroll">
+    <v-account-projects :userId="user.userId" />
     <v-account-discussions />
   </q-scroll-area>
 </template>
@@ -14,9 +12,9 @@ import { computed } from "vue";
 export default {
   components: { VAccountProjects, VAccountDiscussions },
   setup() {
-    const user = computed(() => store.state.auth.user)
+    const user = computed(() => store.state.auth.user);
     return {
-      user
+      user,
     };
   },
 };

@@ -1,8 +1,6 @@
 <template>
   <q-page class="my-page q-py-md">
-    <q-scroll-area
-      class="col"
-      style="overflow: auto; min-width: auto; height: 90vh">
+    <q-scroll-area class="col my-scroll">
       <div class="row q-mb-md">
         <div class="col">
           <q-card flat class="bg-negative">

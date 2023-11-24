@@ -16,8 +16,8 @@
         <q-scroll-area
           :thumb-style="thumbStyle"
           :bar-style="barStyle"
-          class="col"
-          style="overflow: auto; min-width: auto; height: 75vh">
+          class="col my-scroll-2"
+          >
           <q-card
             v-for="(item, index) in 8"
             :key="index"

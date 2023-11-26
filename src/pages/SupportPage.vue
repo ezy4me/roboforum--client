@@ -84,8 +84,9 @@
 
       <div class="row q-mb-md">
         <div class="col">
-          <q-list bordered class="rounded-borders">
+          <q-list  bordered class="rounded-borders">
             <q-expansion-item
+              class="bg-grey-10"
               v-for="(q, index) in faq"
               :key="index"
               expand-separator

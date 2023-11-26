@@ -2,7 +2,8 @@
   <div class="col q-mr-md account-sidebar">
     <q-card flat class="q-mb-md bg-negative">
       <q-card-section>
-        <q-img v-if="!userProfile.image"
+        <q-img
+          v-if="!userProfile"
           src="/alien.jpg"
           spinner-color="white"
           img-class="my-avatar"
@@ -11,8 +12,9 @@
             {{ user.username }}
           </div>
         </q-img>
-        <q-img v-else
-        :src="`${VITE_APP_API_URL}/uploads/${userProfile.image}`"
+        <q-img
+          v-else
+          :src="`${VITE_APP_API_URL}/uploads/${userProfile.image}`"
           spinner-color="white"
           img-class="my-avatar"
           fit="cover">
@@ -41,7 +43,7 @@
   </div>
 </template>
 <script>
-import { computed } from "vue";
+import { computed, onMounted, onUpdated } from "vue";
 import { useStore } from "vuex";
 import { useNavigation } from "@/hooks/useNavigation";
 export default {
@@ -62,6 +64,17 @@ export default {
         location.reload();
       });
     };
+
+
+    const loadData = async () => {
+      await store.dispatch("user/GET_USER_PROFILE", {
+        userId: store.state.auth.user.userId,
+      });
+    };
+
+    onMounted(() => {
+      loadData();
+    });
 
     return {
       navigateTo,

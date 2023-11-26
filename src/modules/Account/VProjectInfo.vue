@@ -19,14 +19,30 @@
 
             <q-separator />
 
-            <q-img
-              class="q-ma-md"
-              fit="cover"
-              v-for="(i, index) in project.projectFiles"
-              :key="index"
-              :src="`${VITE_APP_API_URL}/uploads/${i.file}`"
-              no-native-menu>
-            </q-img>
+            <div class="row">
+              <q-card flat v-for="(i, index) in project.projectFiles">
+                <q-img
+                  v-if="isImage(i.file)"
+                  class="q-ma-md"
+                  fit="cover"
+                  :key="index"
+                  :src="`${VITE_APP_API_URL}/uploads/${i.file}`"
+                  no-native-menu>
+                </q-img>
+                <q-img
+                  v-else
+                  class="q-ma-md"
+                  fit="cover"
+                  src="/file.png"
+                  no-native-menu>
+                  <div class="absolute-bottom text-center">
+                    <a class="text-white" :href="`${VITE_APP_API_URL}/uploads/${i.file}`">
+                      {{ i.file }}
+                    </a>
+                  </div>
+                </q-img>
+              </q-card>
+            </div>
 
             <q-separator />
 
@@ -63,12 +79,26 @@ export default {
         projectId: props.projectId,
       });
     };
+
+    const fileTypes = ["jpg", "jpeg", "png"]; //acceptable file types
+
+    function isImage(file) {
+      if (file) {
+        var extension = file.split(".").pop().toLowerCase(); //file extension from input file
+        const isSuccess = fileTypes.indexOf(extension) > -1;
+
+        return isSuccess;
+      }
+    }
+
     onMounted(() => {
       loadData();
     });
+
     return {
       projectId: ref(props.projectId),
       project,
+      isImage,
       VITE_APP_API_URL: import.meta.env.VITE_APP_API_URL,
     };
   },

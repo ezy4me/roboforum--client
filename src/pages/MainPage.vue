@@ -4,7 +4,7 @@
       class="col my-scroll">
       <q-timeline color="secondary" class="q-pa-md bg-grey-10 rounded-borders">
         <q-timeline-entry heading class="text-center">
-          RobotForum
+          RoboForum
         </q-timeline-entry>
 
         <q-timeline-entry icon="start">

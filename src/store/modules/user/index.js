@@ -23,8 +23,19 @@ const actions = {
             })
     },
 
-    async UPDATE_USER_PROFILE({ commit }, { userId, name, bio, company, location }) {
-        return UserAPI.updateUserProfile(userId, name, bio, company, location).then((res) => {
+    async UPDATE_USER({ commit }, { userId, username }) {
+        return UserAPI.updateUser(userId, username).then((res) => {
+            console.log(res.data);
+            commit('setUser', res.data)
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
+    async UPDATE_USER_PROFILE({ commit }, { userId, name, bio, company, location, image }) {
+        return UserAPI.updateUserProfile(userId, name, bio, company, location, image).then((res) => {
             console.log(res.data);
             commit('setUserProfile', res.data)
         })
@@ -66,7 +77,11 @@ const mutations = {
     setUserProjects(state, userProjects) {
         state.userProjects = userProjects;
         localStorage.setItem('userProjects', JSON.stringify(userProjects));
-    }
+    },
+
+    setUser(state, user) {
+        localStorage.setItem('user', JSON.stringify(user));
+    },
 }
 
 export default {

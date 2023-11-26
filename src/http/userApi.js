@@ -6,10 +6,24 @@ export const UserAPI = {
         return LoginAPIInstance.get(url)
     },
 
-    updateUserProfile(userId, name, bio, company, location) {
-        const url = import.meta.env.VITE_APP_USER_PROFILE_API_URL + `${userId}`
-        const data = { name, bio, company, location }
+    updateUser(userId, username) {
+        const url = import.meta.env.VITE_APP_USER_API_URL + `${userId}`
+        const data = { username }
         return LoginAPIInstance.put(url, { ...data })
+    },
+
+    updateUserProfile(userId, name, bio, company, location, image) {
+        const url = import.meta.env.VITE_APP_USER_PROFILE_API_URL + `${userId}`
+
+        const formData = new FormData()
+        formData.append('userId', userId)
+        formData.append('name', name)
+        formData.append('bio', bio)
+        formData.append('company', company)
+        formData.append('location', location)
+        formData.append('image', image)
+
+        return FormDataAPIInstance.put(url, formData)
     },
 
     getUserProjects(userId) {

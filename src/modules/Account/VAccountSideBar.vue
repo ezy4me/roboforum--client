@@ -2,8 +2,17 @@
   <div class="col q-mr-md account-sidebar">
     <q-card flat class="q-mb-md bg-negative">
       <q-card-section>
-        <q-img
+        <q-img v-if="!userProfile.image"
           src="/alien.jpg"
+          spinner-color="white"
+          img-class="my-avatar"
+          fit="cover">
+          <div class="absolute-bottom text-subtitle1 text-center">
+            {{ user.username }}
+          </div>
+        </q-img>
+        <q-img v-else
+        :src="`${VITE_APP_API_URL}/uploads/${userProfile.image}`"
           spinner-color="white"
           img-class="my-avatar"
           fit="cover">
@@ -44,6 +53,10 @@ export default {
       () => store.state.auth.user || localStorage.getItem("user")
     );
 
+    const userProfile = computed(
+      () => store.state.user.userProfile || localStorage.getItem("userProfile")
+    );
+
     const onLogout = async () => {
       await store.dispatch("auth/ON_LOGOUT").then(() => {
         location.reload();
@@ -54,6 +67,8 @@ export default {
       navigateTo,
       onLogout,
       user,
+      userProfile,
+      VITE_APP_API_URL: import.meta.env.VITE_APP_API_URL,
     };
   },
 };

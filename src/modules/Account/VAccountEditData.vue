@@ -35,7 +35,7 @@
           </q-card-section>
           <q-card-actions align="center" class="q-mx-sm">
             <q-btn
-              @click="onSave"
+              @click="onSaveUsername"
               class="full-width"
               color="indigo"
               label="Сохранить" />
@@ -48,6 +48,19 @@
         <q-card flat class="bg-negative">
           <q-card-section>
             <div class="text-h4 text-uppercase">Личная информация</div>
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
+    <div class="row q-mb-md">
+      <div class="col">
+        <q-card flat class="bg-negative">
+          <q-card-section>
+            <q-file outlined v-model="state.image">
+              <template v-slot:prepend>
+                <q-icon name="attach_file" />
+              </template>
+            </q-file>
           </q-card-section>
         </q-card>
       </div>
@@ -148,6 +161,7 @@ export default {
       name: "",
       company: "",
       location: "",
+      image: [],
       links: [
         { link: "", resource: "" },
         { link: "", resource: "" },
@@ -178,6 +192,15 @@ export default {
         bio: state.bio,
         company: state.company,
         location: state.location,
+        links: state.links,
+        image: state.image,
+      });
+    };
+
+    const onSaveUsername = async () => {
+      await store.dispatch("user/UPDATE_USER", {
+        userId: user.value.userId,
+        username: state.username,
       });
     };
 
@@ -188,6 +211,7 @@ export default {
     return {
       state,
       onSave,
+      onSaveUsername,
     };
   },
 };

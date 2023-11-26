@@ -19,7 +19,7 @@
 
             <q-separator />
 
-            <div class="row">
+            <div class="row" :class="!$q.screen.gt.md ? 'justify-center' : ''">
               <q-card flat v-for="(i, index) in project.projectFiles">
                 <q-img
                   v-if="isImage(i.file)"
@@ -39,7 +39,7 @@
                 <q-img
                   v-else
                   class="q-ma-md"
-                  fit="cover"
+                  fit="none"
                   src="/file.png"
                   no-native-menu>
                   <div class="absolute-bottom text-center">
@@ -61,7 +61,9 @@
                 {{ new Date(project.date).toLocaleDateString("ru") }}
               </q-btn>
               <q-separator vertical class="q-mx-md" />
-              <div class="text-body1 bg-indigo q-pa-sm rounded-borders">{{ project.user.username }}</div>
+              <div class="text-body1 bg-indigo q-pa-sm rounded-borders">
+                {{ project.user.username }}
+              </div>
             </q-card-actions>
           </q-card>
           <VCommentsWall :projectId="projectId" />

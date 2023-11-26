@@ -12,7 +12,7 @@ export const UserAPI = {
         return LoginAPIInstance.put(url, { ...data })
     },
 
-    updateUserProfile(userId, name, bio, company, location, image) {
+    updateUserProfile(userId, name, bio, company, location, image, links) {
         const url = import.meta.env.VITE_APP_USER_PROFILE_API_URL + `${userId}`
 
         const formData = new FormData()
@@ -21,7 +21,16 @@ export const UserAPI = {
         formData.append('bio', bio)
         formData.append('company', company)
         formData.append('location', location)
-        formData.append('image', image)
+        if (image.length > 0)
+        {
+            console.log(1);
+            formData.append('image', image)
+        }
+
+        console.log(links);
+        for (let i = 0; i < links.length; i++) {
+            formData.append('links[]', JSON.stringify(links[i]));
+        }
 
         return FormDataAPIInstance.put(url, formData)
     },

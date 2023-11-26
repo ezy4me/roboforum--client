@@ -4,7 +4,7 @@
       <div class="col">
         <q-card flat class="bg-negative">
           <q-card-section>
-            <div class="text-h4 text-uppercase">Информация профиля</div>
+            <div class="text-h6 text-uppercase">Информация профиля</div>
           </q-card-section>
         </q-card>
       </div>
@@ -17,7 +17,7 @@
               disable
               filled
               v-model="state.email"
-              label="Email"
+              label="email"
               :dense="dense" />
           </q-card-section>
         </q-card>
@@ -30,7 +30,7 @@
             <q-input
               filled
               v-model="state.username"
-              label="Username"
+              label="username"
               :dense="dense" />
           </q-card-section>
           <q-card-actions align="center" class="q-mx-sm">
@@ -47,7 +47,7 @@
       <div class="col">
         <q-card flat class="bg-negative">
           <q-card-section>
-            <div class="text-h4 text-uppercase">Личная информация</div>
+            <div class="text-h6 text-uppercase">Личная информация</div>
           </q-card-section>
         </q-card>
       </div>
@@ -56,7 +56,7 @@
       <div class="col">
         <q-card flat class="bg-negative">
           <q-card-section>
-            <q-file outlined v-model="state.image">
+            <q-file label="Фото профиля" outlined v-model="state.image">
               <template v-slot:prepend>
                 <q-icon name="attach_file" />
               </template>
@@ -69,7 +69,7 @@
       <div class="col">
         <q-card flat class="bg-negative">
           <q-card-section>
-            <q-input filled v-model="state.name" label="Name" :dense="dense" />
+            <q-input filled v-model="state.name" label="Имя" :dense="dense" />
           </q-card-section>
         </q-card>
       </div>
@@ -78,7 +78,7 @@
       <div class="col">
         <q-card flat class="bg-negative">
           <q-card-section>
-            <q-input filled v-model="state.bio" label="BIO" :dense="dense" />
+            <q-input filled v-model="state.bio" label="О себе" :dense="dense" />
           </q-card-section>
         </q-card>
       </div>
@@ -90,7 +90,7 @@
             <q-input
               filled
               v-model="state.company"
-              label="Company"
+              label="Компания"
               :dense="dense" />
           </q-card-section>
         </q-card>
@@ -103,7 +103,7 @@
             <q-input
               filled
               v-model="state.location"
-              label="Location"
+              label="Местоположение"
               :dense="dense" />
           </q-card-section>
         </q-card>
@@ -116,7 +116,7 @@
             <q-input
               filled
               v-model="state.links[index].link"
-              label="Link"
+              label="Ссылка"
               :dense="dense" />
           </q-card-section>
         </q-card>
@@ -127,7 +127,7 @@
             <q-input
               filled
               v-model="state.links[index].resource"
-              label="Resource"
+              label="Текст к ссылке"
               :dense="dense" />
           </q-card-section>
         </q-card>
@@ -163,8 +163,8 @@ export default {
       location: "",
       image: [],
       links: [
-        { link: "", resource: "" },
-        { link: "", resource: "" },
+        { id: null, link: "", resource: "" },
+        { id: null, link: "", resource: "" },
       ],
     });
 
@@ -182,6 +182,9 @@ export default {
           state.name = userProfile.value.name;
           state.company = userProfile.value.company;
           state.location = userProfile.value.location;
+          for (let i = 0; i < userProfile.value.userSocials.length; i++) {
+            state.links[i] = userProfile.value.userSocials[i];
+          }
         });
     };
 

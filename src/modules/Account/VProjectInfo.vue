@@ -28,6 +28,13 @@
                   :key="index"
                   :src="`${VITE_APP_API_URL}/uploads/${i.file}`"
                   no-native-menu>
+                  <div class="absolute-bottom text-center">
+                    <a
+                      class="text-white q-link"
+                      :href="`${VITE_APP_API_URL}/uploads/${i.file}`">
+                      {{ i.file }}
+                    </a>
+                  </div>
                 </q-img>
                 <q-img
                   v-else
@@ -36,7 +43,9 @@
                   src="/file.png"
                   no-native-menu>
                   <div class="absolute-bottom text-center">
-                    <a class="text-white" :href="`${VITE_APP_API_URL}/uploads/${i.file}`">
+                    <a
+                      class="text-white q-link"
+                      :href="`${VITE_APP_API_URL}/uploads/${i.file}`">
                       {{ i.file }}
                     </a>
                   </div>
@@ -52,7 +61,7 @@
                 {{ new Date(project.date).toLocaleDateString("ru") }}
               </q-btn>
               <q-separator vertical class="q-mx-md" />
-              <div class="text-body1">{{ project.user.username }}</div>
+              <div class="text-body1 bg-indigo q-pa-sm rounded-borders">{{ project.user.username }}</div>
             </q-card-actions>
           </q-card>
           <VCommentsWall :projectId="projectId" />
@@ -80,11 +89,11 @@ export default {
       });
     };
 
-    const fileTypes = ["jpg", "jpeg", "png"]; //acceptable file types
+    const fileTypes = ["jpg", "jpeg", "png"];
 
     function isImage(file) {
       if (file) {
-        var extension = file.split(".").pop().toLowerCase(); //file extension from input file
+        const extension = file.split(".").pop().toLowerCase();
         const isSuccess = fileTypes.indexOf(extension) > -1;
 
         return isSuccess;

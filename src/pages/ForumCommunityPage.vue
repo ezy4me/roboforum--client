@@ -40,7 +40,7 @@
                 {{ new Date(project.date).toLocaleDateString("ru") }}
               </q-btn>
               <q-separator vertical />
-              <div class="text-body2 text-white q-px-sm">
+              <div class="text-body2 text-white q-mx-sm bg-indigo q-pa-sm rounded-borders">
                 {{ project.user.username }}
               </div>
             </q-card-actions>

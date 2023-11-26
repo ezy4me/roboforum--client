@@ -7,6 +7,7 @@
           src="/alien.jpg"
           spinner-color="white"
           img-class="my-avatar"
+          class="my-avatar"
           fit="cover">
           <div class="absolute-bottom text-subtitle1 text-center">
             {{ user.username }}
@@ -16,6 +17,7 @@
           v-else
           :src="`${VITE_APP_API_URL}/uploads/${userProfile.image}`"
           spinner-color="white"
+          class="my-avatar"
           img-class="my-avatar"
           fit="cover">
           <div class="absolute-bottom text-subtitle1 text-center">
@@ -65,7 +67,6 @@ export default {
       });
     };
 
-
     const loadData = async () => {
       await store.dispatch("user/GET_USER_PROFILE", {
         userId: store.state.auth.user.userId,
@@ -87,6 +88,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.my-avatar {
+  min-width: 100% !important; 
+  height: 300px;
+}
 .account-sidebar {
   overflow: auto;
   min-width: 25%;

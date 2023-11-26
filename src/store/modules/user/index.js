@@ -34,8 +34,8 @@ const actions = {
             })
     },
 
-    async UPDATE_USER_PROFILE({ commit }, { userId, name, bio, company, location, image }) {
-        return UserAPI.updateUserProfile(userId, name, bio, company, location, image).then((res) => {
+    async UPDATE_USER_PROFILE({ commit }, { userId, name, bio, company, location, image, links }) {
+        return UserAPI.updateUserProfile(userId, name, bio, company, location, image, links).then((res) => {
             console.log(res.data);
             commit('setUserProfile', res.data)
         })

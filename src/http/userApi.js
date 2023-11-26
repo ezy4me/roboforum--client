@@ -21,11 +21,8 @@ export const UserAPI = {
         formData.append('bio', bio)
         formData.append('company', company)
         formData.append('location', location)
-        if (image.length > 0)
-        {
-            console.log(1);
-            formData.append('image', image)
-        }
+
+        formData.append('image', image)
 
         console.log(links);
         for (let i = 0; i < links.length; i++) {

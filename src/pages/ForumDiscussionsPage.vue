@@ -52,17 +52,17 @@ export default {
     const text = ref();
     return {
       text,
-      thumbStyle: {
-        right: "4px",
-        borderRadius: "5px",
-        width: "5px",
-      },
+      // thumbStyle: {
+      //   right: "4px",
+      //   borderRadius: "5px",
+      //   width: "5px",
+      // },
 
-      barStyle: {
-        right: "2px",
-        borderRadius: "9px",
-        width: "9px",
-      },
+      // barStyle: {
+      //   right: "2px",
+      //   borderRadius: "9px",
+      //   width: "9px",
+      // },
     };
   },
 };

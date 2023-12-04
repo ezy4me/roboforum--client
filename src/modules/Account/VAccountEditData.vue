@@ -31,6 +31,10 @@
               filled
               v-model="state.username"
               label="username"
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'Поле не должно быть пустым',
+              ]"
               :dense="dense" />
           </q-card-section>
           <q-card-actions align="center" class="q-mx-sm">
@@ -201,10 +205,12 @@ export default {
     };
 
     const onSaveUsername = async () => {
-      await store.dispatch("user/UPDATE_USER", {
-        userId: user.value.userId,
-        username: state.username,
-      });
+      if (state.username.length > 0) {
+        await store.dispatch("user/UPDATE_USER", {
+          userId: user.value.userId,
+          username: state.username,
+        });
+      }
     };
 
     onMounted(() => {

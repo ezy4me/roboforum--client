@@ -20,7 +20,7 @@
             <q-separator />
 
             <div class="row" :class="!$q.screen.gt.md ? 'justify-center' : ''">
-              <q-card flat v-for="(i, index) in project.projectFiles">
+              <q-card class="bg-transparent" flat v-for="(i, index) in project.projectFiles">
                 <q-img
                   v-if="isImage(i.file)"
                   class="q-ma-md"

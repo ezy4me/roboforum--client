@@ -22,5 +22,13 @@ export const ProjectAPI = {
         const data = { userId, comment }
 
         return LoginAPIInstance.post(url, { ...data })
+    },
+
+    postProjectCommentAnswer(projectId, userId, comment, userCommentId) {
+        const url = import.meta.env.VITE_APP_USER_PROJECT_COMMENT_ANSWER_API_URL + `/${projectId}`
+
+        const data = { userId, comment, userCommentId }
+
+        return LoginAPIInstance.post(url, { ...data })
     }
 }

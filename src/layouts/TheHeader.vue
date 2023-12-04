@@ -31,7 +31,7 @@
 
       <div
         v-if="!user"
-        class="GL__toolbar-link q-ml-xs q-gutter-md text-body2  row items-center no-wrap">
+        class="GL__toolbar-link q-ml-xs q-gutter-md text-body2 row items-center no-wrap">
         <a
           href="javascript:void(0)"
           @click="isAuthDialog = true"
@@ -92,7 +92,7 @@
                 clickable
                 class="GL__menu-link"
                 v-for="(link, index) in accountLinks"
-                @click="navigateTo(link.route)">
+                @click="navigateTo(link.route, link?.params)">
                 <q-item-section>{{ link.name }}</q-item-section>
               </q-item>
               <q-item clickable class="GL__menu-link bg-red">
@@ -158,7 +158,8 @@ export default {
       },
       {
         name: "Ваши проекты",
-        route: "main",
+        route: "userProjects",
+        params: { userId: store.state.auth.user?.userId },
       },
       {
         name: "Ваши обсуждения",
@@ -166,10 +167,6 @@ export default {
       },
       {
         name: "Помощь",
-        route: "main",
-      },
-      {
-        name: "Настройки",
         route: "main",
       },
     ]);

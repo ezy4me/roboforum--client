@@ -1,11 +1,17 @@
 <template>
   <div class="row">
-    <q-card flat class=" full-width q-pb-md">
+    <q-card flat class="full-width q-pb-md">
       <q-card-section>
         <div class="text-h6">Оставить комментарий:</div>
       </q-card-section>
       <q-card-section>
-        <q-input v-model="state.comment" filled type="textarea" />
+        <q-input
+          v-model="state.comment"
+          filled
+          type="textarea"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Поле не должно быть пустым',
+          ]" />
       </q-card-section>
       <q-card-actions align="right">
         <q-btn
@@ -21,7 +27,9 @@
     <VComment
       v-for="(comment, index) in projectComments"
       :key="index"
-      :comment="comment" />
+      :comment="comment"
+      :projectId="projectId"
+      @loadData="loadData" />
   </div>
 </template>
 <script>
@@ -54,19 +62,18 @@ export default {
     };
 
     const onSubmit = async () => {
-      if(state.userId){
+      if (state.userId) {
         await store
-        .dispatch("project/POST_PROJECT_COMMENT", {
-          ...state,
-        })
-        .then(() => {
-          loadData();
-        });
+          .dispatch("project/POST_PROJECT_COMMENT", {
+            ...state,
+          })
+          .then(() => {
+            loadData();
+            state.comment = null;
+          });
+      } else {
+        alert("Авторизируйся");
       }
-      else {
-        alert('Авторизируйся')
-      }
-     
     };
 
     onMounted(() => {
@@ -77,6 +84,7 @@ export default {
       projectComments,
       onSubmit,
       state,
+      loadData,
     };
   },
   components: { VComment },

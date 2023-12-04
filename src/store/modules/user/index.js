@@ -3,7 +3,7 @@ import { UserAPI } from "@/http/userApi";
 
 const state = {
     userProfile: null,
-    userProjects: null,
+    userProjects: [],
 }
 
 const getters = {
@@ -19,6 +19,10 @@ const actions = {
         })
             .catch((error) => {
                 console.log(error);
+                if (error.status === 401) {
+                    localStorage.clear();
+                    location.reload()
+                }
                 return error;
             })
     },

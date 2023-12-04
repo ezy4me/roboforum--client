@@ -1,5 +1,5 @@
 <template>
-  <q-card style="width: 300px">
+  <q-card flat style="width: 300px">
     <q-card-section>
       <div class="text-h6">Регистрация</div>
     </q-card-section>

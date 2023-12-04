@@ -56,6 +56,16 @@ const actions = {
             })
     },
 
+    async POST_PROJECT_COMMENT_ANSWER({ _ }, { projectId, userId, comment, userCommentId }) {
+        return await ProjectAPI.postProjectCommentAnswer(projectId, userId, comment, userCommentId).then((res) => {
+            console.log(res.data);
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
 }
 
 const mutations = {

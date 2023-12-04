@@ -43,6 +43,13 @@ const routes = [
                 name: 'newProject',
                 beforeEnter: isAuthenticated,
                 component: () => import('../modules/Account/VProjectForm.vue'),
+            },
+            {
+                path: 'userProjects/:userId',
+                name: 'userProjects',
+                beforeEnter: isAuthenticated,
+                props: true,
+                component: () => import('../modules/Account/VAccountProjects.vue'),
             }
         ],
         redirect: '/account/body'

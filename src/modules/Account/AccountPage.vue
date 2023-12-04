@@ -4,14 +4,18 @@
       v-if="$q.screen.gt.sm"
       class="fit row justify-center items-start content-start">
       <v-account-side-bar />
-      <router-view></router-view>
+      <q-scroll-area class="col my-scroll">
+        <router-view></router-view>
+      </q-scroll-area>
     </div>
     <div
       v-if="!$q.screen.gt.sm"
       class="fit col justify-center items-start content-start">
       <q-scroll-area class="col my-scroll">
         <v-account-side-bar />
-        <router-view></router-view>
+        <q-scroll-area class="col my-scroll">
+          <router-view></router-view>
+        </q-scroll-area>
       </q-scroll-area>
     </div>
   </q-page>

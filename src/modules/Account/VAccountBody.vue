@@ -1,8 +1,6 @@
 <template>
-  <q-scroll-area class="col my-scroll">
     <v-account-projects :userId="user.userId" />
     <v-account-discussions />
-  </q-scroll-area>
 </template>
 <script>
 import store from "@/store";

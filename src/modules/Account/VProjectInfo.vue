@@ -19,8 +19,25 @@
 
             <q-separator />
 
+            <q-card-section>
+              <q-chip
+                v-for="(i, index) in project.projectTags"
+                :key="index"
+                color="indigo"
+                text-color="white"
+                icon="event"
+                >
+                {{ i.tag.name }}
+              </q-chip>
+            </q-card-section>
+
+            <q-separator />
+
             <div class="row" :class="!$q.screen.gt.md ? 'justify-center' : ''">
-              <q-card class="bg-transparent" flat v-for="(i, index) in project.projectFiles">
+              <q-card
+                class="bg-transparent"
+                flat
+                v-for="(i, index) in project.projectFiles">
                 <q-img
                   v-if="isImage(i.file)"
                   class="q-ma-md"
@@ -56,6 +73,14 @@
             <q-separator />
 
             <q-card-actions align="right">
+              <q-btn
+                v-if="project.projectTypeId == 2"
+                flat
+                round
+                icon="lock"
+                class="bg-red" />
+              <q-btn v-else flat round icon="lock_open" class="bg-green" />
+
               <q-btn flat round icon="event" />
               <q-btn flat>
                 {{ new Date(project.date).toLocaleDateString("ru") }}

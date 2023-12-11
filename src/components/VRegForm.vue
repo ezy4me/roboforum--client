@@ -4,7 +4,7 @@
       <div class="text-h6">Регистрация</div>
     </q-card-section>
     <q-card-section>
-      <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+      <q-form @submit="onSubmit" class="q-gutter-md">
         <q-input
           filled
           v-model="state.username"
@@ -63,11 +63,6 @@ export default {
     const state = reactive({ ...initialState });
     const accept = ref(false);
 
-    const onReset = () => {
-      state.username = "";
-      state.email = "";
-      state.password = "";
-    };
 
     const onSubmit = () => {
       store
@@ -82,7 +77,6 @@ export default {
     return {
       state,
       accept,
-      onReset,
       onSubmit,
       $q,
     };

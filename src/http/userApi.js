@@ -37,7 +37,7 @@ export const UserAPI = {
         return LoginAPIInstance.get(url)
     },
 
-    postUserProject(userId, title, description, projectTypeId, projectFiles) {
+    postUserProject(userId, title, description, projectTypeId, projectFiles, tags) {
         const url = import.meta.env.VITE_APP_PROJECTS_API_URL
 
         const formData = new FormData()
@@ -47,11 +47,38 @@ export const UserAPI = {
         formData.append('projectTypeId', projectTypeId)
         formData.append('userId', userId)
         projectFiles.forEach((file, index) => {
-            formData.append('projectFiles', file);
+            if (file instanceof File)
+                formData.append('projectFiles', file);
         });
+
+        formData.append('tags', tags)
 
         console.log(projectFiles);
 
         return FormDataAPIInstance.post(url, formData)
+    },
+
+    updateUserProject(projectId, userId, title, description, projectTypeId, projectFiles, tags) {
+        const url = import.meta.env.VITE_APP_PROJECTS_API_URL + `${projectId}`
+
+        const formData = new FormData()
+        formData.append('userId', userId)
+        formData.append('title', title)
+        formData.append('description', description)
+        formData.append('projectTypeId', projectTypeId)
+        formData.append('userId', userId)
+        projectFiles.forEach((file, index) => {
+            if (file instanceof File)
+                formData.append('projectFiles', file);
+        });
+
+        console.log(tags);
+        formData.append('tags', tags)
+
+        console.log(projectFiles);
+
+        return FormDataAPIInstance.put(url, formData)
     }
+
+
 }

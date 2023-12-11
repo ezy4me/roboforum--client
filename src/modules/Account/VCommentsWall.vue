@@ -1,27 +1,29 @@
 <template>
   <div class="row">
-    <q-card flat class="full-width q-pb-md">
-      <q-card-section>
-        <div class="text-h6">Оставить комментарий:</div>
-      </q-card-section>
-      <q-card-section>
-        <q-input
-          v-model="state.comment"
-          filled
-          type="textarea"
-          :rules="[
-            (val) => (val && val.length > 0) || 'Поле не должно быть пустым',
-          ]" />
-      </q-card-section>
-      <q-card-actions align="right">
-        <q-btn
-          @click="onSubmit"
-          color="indigo"
-          icon-right="mail"
-          class="q-mr-sm"
-          label="Отправить" />
-      </q-card-actions>
-    </q-card>
+    <q-form @submit.prevent="onSubmit" class="q-gutter-md full-width">
+      <q-card flat class="full-width q-pb-md">
+        <q-card-section>
+          <div class="text-h6">Оставить комментарий:</div>
+        </q-card-section>
+        <q-card-section>
+          <q-input
+            v-model="state.comment"
+            filled
+            type="textarea"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Поле не должно быть пустым',
+            ]" />
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn
+            type="submit"
+            color="indigo"
+            icon-right="mail"
+            class="q-mr-sm"
+            label="Отправить" />
+        </q-card-actions>
+      </q-card>
+    </q-form>
   </div>
   <div class="row">
     <VComment

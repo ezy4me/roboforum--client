@@ -1,151 +1,162 @@
 <template>
   <q-scroll-area class="col my-scroll">
-    <div class="row q-mb-md">
-      <div class="col">
-        <q-card flat class="bg-negative">
-          <q-card-section>
-            <div class="text-h6 text-uppercase">Информация профиля</div>
-          </q-card-section>
-        </q-card>
+    <q-form @submit.prevent="onSaveUsername" class="q-gutter-md">
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-card flat class="bg-negative">
+            <q-card-section>
+              <div class="text-h6 text-uppercase">Информация профиля</div>
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
-    </div>
-    <div class="row q-mb-md">
-      <div class="col">
-        <q-card flat class="bg-negative">
-          <q-card-section>
-            <q-input
-              disable
-              filled
-              v-model="state.email"
-              label="email"
-              :dense="dense" />
-          </q-card-section>
-        </q-card>
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-card flat class="bg-negative">
+            <q-card-section>
+              <q-input
+                disable
+                filled
+                v-model="state.email"
+                label="email"
+                :dense="dense" />
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
-    </div>
-    <div class="row q-mb-md">
-      <div class="col">
-        <q-card flat horizontal class="bg-negative">
-          <q-card-section>
-            <q-input
-              filled
-              v-model="state.username"
-              label="username"
-              :rules="[
-                (val) =>
-                  (val && val.length > 0) || 'Поле не должно быть пустым',
-              ]"
-              :dense="dense" />
-          </q-card-section>
-          <q-card-actions align="center" class="q-mx-sm">
-            <q-btn
-              @click="onSaveUsername"
-              class="full-width"
-              color="indigo"
-              label="Сохранить" />
-          </q-card-actions>
-        </q-card>
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-card flat horizontal class="bg-negative">
+            <q-card-section>
+              <q-input
+                filled
+                v-model="state.username"
+                label="username"
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'Поле не должно быть пустым',
+                ]"
+                :dense="dense" />
+            </q-card-section>
+            <q-card-actions align="center" class="q-mx-sm">
+              <q-btn
+                type="submit"
+                class="full-width"
+                color="indigo"
+                label="Сохранить" />
+            </q-card-actions>
+          </q-card>
+        </div>
       </div>
-    </div>
-    <div class="row q-mb-md">
-      <div class="col">
-        <q-card flat class="bg-negative">
-          <q-card-section>
-            <div class="text-h6 text-uppercase">Личная информация</div>
-          </q-card-section>
-        </q-card>
+    </q-form>
+    <q-form @submit.prevent="onSave" class="q-gutter-md">
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-card flat class="bg-negative">
+            <q-card-section>
+              <div class="text-h6 text-uppercase">Личная информация</div>
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
-    </div>
-    <div class="row q-mb-md">
-      <div class="col">
-        <q-card flat class="bg-negative">
-          <q-card-section>
-            <q-file label="Фото профиля" outlined v-model="state.image">
-              <template v-slot:prepend>
-                <q-icon name="attach_file" />
-              </template>
-            </q-file>
-          </q-card-section>
-        </q-card>
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-card flat class="bg-negative">
+            <q-card-section>
+              <q-file label="Фото профиля" outlined v-model="state.image">
+                <template v-slot:prepend>
+                  <q-icon name="attach_file" />
+                </template>
+              </q-file>
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
-    </div>
-    <div class="row q-mb-md">
-      <div class="col">
-        <q-card flat class="bg-negative">
-          <q-card-section>
-            <q-input filled v-model="state.name" label="Имя" :dense="dense" />
-          </q-card-section>
-        </q-card>
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-card flat class="bg-negative">
+            <q-card-section>
+              <q-input filled v-model="state.name" label="Имя" :dense="dense" />
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
-    </div>
-    <div class="row q-mb-md">
-      <div class="col">
-        <q-card flat class="bg-negative">
-          <q-card-section>
-            <q-input filled v-model="state.bio" label="О себе" :dense="dense" />
-          </q-card-section>
-        </q-card>
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-card flat class="bg-negative">
+            <q-card-section>
+              <q-input
+                filled
+                v-model="state.bio"
+                label="О себе"
+                :dense="dense" />
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
-    </div>
-    <div class="row q-mb-md">
-      <div class="col">
-        <q-card flat class="bg-negative">
-          <q-card-section>
-            <q-input
-              filled
-              v-model="state.company"
-              label="Компания"
-              :dense="dense" />
-          </q-card-section>
-        </q-card>
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-card flat class="bg-negative">
+            <q-card-section>
+              <q-input
+                filled
+                v-model="state.company"
+                label="Компания"
+                :dense="dense" />
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
-    </div>
-    <div class="row q-mb-md">
-      <div class="col">
-        <q-card flat class="bg-negative">
-          <q-card-section>
-            <q-input
-              filled
-              v-model="state.location"
-              label="Местоположение"
-              :dense="dense" />
-          </q-card-section>
-        </q-card>
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-card flat class="bg-negative">
+            <q-card-section>
+              <q-input
+                filled
+                v-model="state.location"
+                label="Местоположение"
+                :dense="dense" />
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
-    </div>
-    <div class="row q-mb-md" v-for="(link, index) in state.links" :key="index">
-      <div class="col">
-        <q-card flat class="bg-negative">
-          <q-card-section>
-            <q-input
-              filled
-              v-model="state.links[index].link"
-              label="Ссылка"
-              :dense="dense" />
-          </q-card-section>
-        </q-card>
+      <div
+        class="row q-mb-md"
+        v-for="(link, index) in state.links"
+        :key="index">
+        <div class="col">
+          <q-card flat class="bg-negative">
+            <q-card-section>
+              <q-input
+                filled
+                v-model="state.links[index].link"
+                label="Ссылка"
+                :dense="dense" />
+            </q-card-section>
+          </q-card>
+        </div>
+        <div class="col">
+          <q-card flat class="bg-negative">
+            <q-card-section>
+              <q-input
+                filled
+                v-model="state.links[index].resource"
+                label="Текст к ссылке"
+                :dense="dense" />
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
-      <div class="col">
-        <q-card flat class="bg-negative">
-          <q-card-section>
-            <q-input
-              filled
-              v-model="state.links[index].resource"
-              label="Текст к ссылке"
-              :dense="dense" />
-          </q-card-section>
-        </q-card>
+      <div class="row q-mb-md">
+        <div class="col">
+          <q-btn
+            type="submit"
+            class="full-width"
+            color="indigo"
+            label="Сохранить" />
+        </div>
       </div>
-    </div>
-    <div class="row q-mb-md">
-      <div class="col">
-        <q-btn
-          @click="onSave"
-          class="full-width"
-          color="indigo"
-          label="Сохранить" />
-      </div>
-    </div>
+    </q-form>
   </q-scroll-area>
 </template>
 <script>

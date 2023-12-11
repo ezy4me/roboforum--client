@@ -45,6 +45,13 @@ const routes = [
                 component: () => import('../modules/Account/VProjectForm.vue'),
             },
             {
+                path: 'editProject/:projectId',
+                name: 'editProject',
+                beforeEnter: isAuthenticated,
+                props: true,
+                component: () => import('../modules/Account/VProjectForm.vue'),
+            },
+            {
                 path: 'userProjects/:userId',
                 name: 'userProjects',
                 beforeEnter: isAuthenticated,

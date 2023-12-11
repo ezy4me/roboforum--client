@@ -59,6 +59,9 @@
         {{ answer.userComment.user.username }}
       </div>
       <div class="text-body1">{{ answer.userComment.comment }}</div>
+      <div align="right">
+        {{ new Date(answer.userComment.dateTime).toLocaleDateString("ru") }}
+      </div>
     </q-card-section>
   </q-card>
 </template>

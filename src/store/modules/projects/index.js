@@ -66,6 +66,17 @@ const actions = {
             })
     },
 
+    async DELETE_PROJECT_IMAGE({ commit }, { projectId, imageId }) {
+        return await ProjectAPI.deleteProjectImage(projectId, imageId).then((res) => {
+            console.log(res.data);
+            commit('setProject', res.data)
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
 }
 
 const mutations = {

@@ -25,10 +25,12 @@
     <q-card
       v-for="(project, index) in userProjects"
       :key="index"
-      class="my-card q-mb-md bg-grey-10"
-      @click="navigateTo('project', { projectId: project.id })"
+      class="q-mb-md bg-grey-10"
       flat>
-      <q-card-section horizontal>
+      <q-card-section
+        horizontal
+        class="my-card"
+        @click="navigateTo('project', { projectId: project.id })">
         <q-card-section class="q-pt-xs">
           <div class="text-h5 q-mt-sm q-mb-xs">{{ project.title }}</div>
           <div class="text-caption">{{ project.description }}</div>
@@ -38,16 +40,33 @@
       <q-separator />
 
       <q-card-actions align="left">
+        <q-btn
+          v-if="project.projectTypeId == 2"
+          flat
+          round
+          icon="lock"
+          class="bg-red" />
+        <q-btn v-else flat round icon="lock_open" class="bg-green" />
         <q-btn flat round icon="event" />
         <q-btn flat>
           {{ new Date(project.date).toLocaleDateString("ru") }}
         </q-btn>
+        <q-space />
+        <q-btn
+          @click="navigateTo('editProject', { projectId: project.id })"
+          flat
+          label="Редактировать" />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="userProjects.length == 0" class="my-card q-mb-md bg-grey-10" flat>
+    <q-card
+      v-if="userProjects.length == 0"
+      class="my-card q-mb-md bg-grey-10"
+      flat>
       <q-card-section class="q-pt-xs">
-        <div class="text-h5 text-center text-uppercase q-mt-sm q-mb-xs">Список пуст</div>
+        <div class="text-h5 text-center text-uppercase q-mt-sm q-mb-xs">
+          Список пуст
+        </div>
       </q-card-section>
     </q-card>
   </div>

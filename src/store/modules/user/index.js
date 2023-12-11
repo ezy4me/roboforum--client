@@ -60,8 +60,8 @@ const actions = {
             })
     },
 
-    async POST_USER_PROJECT({ _ }, { userId, title, description, projectTypeId, projectFiles }) {
-        return UserAPI.postUserProject(userId, title, description, projectTypeId, projectFiles).then((res) => {
+    async POST_USER_PROJECT({ _ }, { userId, title, description, projectTypeId, projectFiles, tags }) {
+        return UserAPI.postUserProject(userId, title, description, projectTypeId, projectFiles, tags).then((res) => {
             console.log(res.data);
         })
             .catch((error) => {
@@ -70,6 +70,15 @@ const actions = {
             })
     },
 
+    async UPDATE_USER_PROJECT({ _ }, { projectId, userId, title, description, projectTypeId, projectFiles, tags }) {
+        return UserAPI.updateUserProject(projectId, userId, title, description, projectTypeId, projectFiles, tags).then((res) => {
+            console.log(res.data);
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
 }
 
 const mutations = {

@@ -168,7 +168,7 @@
   </q-scroll-area>
 </template>
 <script>
-import { computed, onMounted, reactive, ref, watch } from "vue";
+import { computed, onBeforeMount, onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { useStore } from "vuex";
 export default {
   props: {
@@ -251,6 +251,14 @@ export default {
     onMounted(() => {
       store.dispatch("tag/GET_ALL_TAGS");
       store.dispatch("project/GET_ONE_PROJECT", { projectId: props.projectId });
+    });
+
+    onBeforeMount(() => {
+      state.title = "";
+      state.description = "";
+      state.projectTypeId = "1";
+      state.projectFiles = [];
+      state.tags = [];
     });
 
     const onFileInputChange = (event) => {

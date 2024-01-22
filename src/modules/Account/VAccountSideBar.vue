@@ -39,6 +39,13 @@
           flat
           class="full-width q-mb-md bg-grey-10"
           label="Редактировать профиль" />
+
+        <q-btn
+          @click="navigateTo('userProjects', { userId: store.state.auth.user?.userId })"
+          flat
+          class="full-width q-mb-md bg-grey-10"
+          label="Мои проекты" />
+
         <q-btn @click="onLogout" class="full-width" color="red" label="Выйти" />
       </q-card-section>
     </q-card>
@@ -80,6 +87,7 @@ export default {
     return {
       navigateTo,
       onLogout,
+      store,
       user,
       userProfile,
       VITE_APP_API_URL: import.meta.env.VITE_APP_API_URL,
@@ -89,7 +97,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .my-avatar {
-  min-width: 100% !important; 
+  min-width: 100% !important;
   height: 300px;
 }
 .account-sidebar {

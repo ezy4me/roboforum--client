@@ -78,7 +78,54 @@ export const UserAPI = {
         console.log(projectFiles);
 
         return FormDataAPIInstance.put(url, formData)
-    }
+    },
 
+    ////////////////
+
+    getUserDiscussions(userId) {
+        const url = import.meta.env.VITE_APP_USER_DISCUSSION_API_URL + `${userId}`
+        return LoginAPIInstance.get(url)
+    },
+
+    postUserDiscussion(userId, title, description, discussionFiles, tags) {
+        const url = import.meta.env.VITE_APP_DISCUSSION_API_URL
+
+        const formData = new FormData()
+        formData.append('userId', userId)
+        formData.append('title', title)
+        formData.append('description', description)
+        formData.append('userId', userId)
+        discussionFiles.forEach((file, index) => {
+            if (file instanceof File)
+                formData.append('discussionFiles', file);
+        });
+
+        formData.append('tags', tags)
+
+        console.log(discussionFiles);
+
+        return FormDataAPIInstance.post(url, formData)
+    },
+
+    updateUserDiscussion(discussionId, userId, title, description, discussionFiles, tags) {
+        const url = import.meta.env.VITE_APP_DISCUSSION_API_URL + `${discussionId}`
+
+        const formData = new FormData()
+        formData.append('userId', userId)
+        formData.append('title', title)
+        formData.append('description', description)
+        formData.append('userId', userId)
+        discussionFiles.forEach((file, index) => {
+            if (file instanceof File)
+                formData.append('discussionFiles', file);
+        });
+
+        console.log(tags);
+        formData.append('tags', tags)
+
+        console.log(discussionFiles);
+
+        return FormDataAPIInstance.put(url, formData)
+    },
 
 }

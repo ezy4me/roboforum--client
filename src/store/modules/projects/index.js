@@ -15,7 +15,7 @@ const getters = {
 const actions = {
     async GET_PUBLIC_PROJECTS({ commit }) {
         return ProjectAPI.getPublicProjects().then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             commit('setPublicProjects', res.data)
         })
             .catch((error) => {
@@ -26,7 +26,7 @@ const actions = {
 
     async GET_ONE_PROJECT({ commit }, { projectId }) {
         return await ProjectAPI.getOneProject(projectId).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             commit('setProject', res.data)
         })
             .catch((error) => {
@@ -37,7 +37,7 @@ const actions = {
 
     async GET_PROJECT_COMMENTS({ commit }, { projectId }) {
         return await ProjectAPI.getProjectComments(projectId).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             commit('setProjectComments', res.data)
         })
             .catch((error) => {
@@ -76,6 +76,17 @@ const actions = {
                 return error;
             })
     },
+
+    async SEARCH_PROJECT({ commit }, searchTerm) {
+        return await ProjectAPI.searchProject(searchTerm).then((res) => {
+            console.log(res.data);
+            commit('setPublicProjects', res.data)
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    }
 
 }
 

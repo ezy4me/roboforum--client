@@ -1,10 +1,13 @@
 <template>
   <q-card flat class="full-width q-pa-md">
     <q-card-section class="bg-grey-10">
-      <div class="text-h6 text-indigo">
+      <q-chip class="text-h6">
+        <q-avatar color="indigo" icon="account_circle"> </q-avatar>
         {{ comment.userComment.user.username }}
+      </q-chip>
+      <div class="text-body1 q-my-sm q-ml-sm">
+        {{ comment.userComment.comment }}
       </div>
-      <div class="text-body1">{{ comment.userComment.comment }}</div>
     </q-card-section>
     <q-card-actions align="right" class="bg-grey-9">
       {{ new Date(comment.userComment.dateTime).toLocaleDateString("ru") }}
@@ -52,13 +55,17 @@
     </div>
 
     <q-card-section
-      v-for="(answer, index) in comment.projectCommentFork"
+      v-for="(answer, index) in comment.projectCommentFork ||
+      comment.discussionCommentFork"
       :key="index"
-      class="q-ml-xl q-my-md bg-blue-grey-10">
-      <div class="text-h6 text-indigo">
+      class="q-ml-xl q-my-md bg-grey-10">
+      <q-chip class="text-h6">
+        <q-avatar color="black" icon="account_circle"> </q-avatar>
         {{ answer.userComment.user.username }}
+      </q-chip>
+      <div class="text-body1 q-my-sm q-ml-sm">
+        {{ answer.userComment.comment }}
       </div>
-      <div class="text-body1">{{ answer.userComment.comment }}</div>
       <div align="right">
         {{ new Date(answer.userComment.dateTime).toLocaleDateString("ru") }}
       </div>
@@ -78,11 +85,13 @@ export default {
         comment: "",
         userCommentId: "",
         projectCommentFork: {},
+        discussionCommentFork: {},
         user: { username: "", email: "", userId: "" },
         date: "",
       }),
     },
     projectId: String,
+    discussionId: String,
   },
   setup(props, { emit }) {
     const store = useStore();
@@ -91,6 +100,7 @@ export default {
       userId: store.state.auth.user?.userId || "",
       commentAnswer: "",
       projectId: props.projectId,
+      discussionId: props.discussionId,
       userCommentId: props.comment.userCommentId,
     });
 
@@ -109,15 +119,26 @@ export default {
     };
 
     const onSubmit = async () => {
-      await store
-        .dispatch("project/POST_PROJECT_COMMENT_ANSWER", {
-          ...state,
-        })
-        .then(() => {
-          emit("loadData");
-          state.comment = null;
-          onCancelAnswerComment();
-        });
+      if (props.projectId)
+        await store
+          .dispatch("project/POST_PROJECT_COMMENT_ANSWER", {
+            ...state,
+          })
+          .then(() => {
+            emit("loadData");
+            state.comment = null;
+            onCancelAnswerComment();
+          });
+      if (props.discussionId)
+        await store
+          .dispatch("discussion/POST_DISCUSSION_COMMENT_ANSWER", {
+            ...state,
+          })
+          .then(() => {
+            emit("loadData");
+            state.comment = null;
+            onCancelAnswerComment();
+          });
     };
 
     return {
@@ -130,4 +151,4 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+

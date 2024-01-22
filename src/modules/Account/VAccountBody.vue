@@ -1,6 +1,6 @@
 <template>
     <v-account-projects :userId="user.userId" />
-    <v-account-discussions />
+    <v-account-discussions :userId="user.userId"/>
 </template>
 <script>
 import store from "@/store";

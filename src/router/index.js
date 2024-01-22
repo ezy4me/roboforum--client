@@ -42,14 +42,27 @@ const routes = [
                 path: 'newProject',
                 name: 'newProject',
                 beforeEnter: isAuthenticated,
-                component: () => import('../modules/Account/VProjectForm.vue'),
+                component: () => import('../modules/Project/VProjectForm.vue'),
+            },
+            {
+                path: 'newDiscussion',
+                name: 'newDiscussion',
+                beforeEnter: isAuthenticated,
+                component: () => import('../modules/Discussion/VDiscussionForm.vue'),
             },
             {
                 path: 'editProject/:projectId',
                 name: 'editProject',
                 beforeEnter: isAuthenticated,
                 props: true,
-                component: () => import('../modules/Account/VProjectForm.vue'),
+                component: () => import('../modules/Project/VProjectForm.vue'),
+            },
+            {
+                path: 'editDiscussion/:discussionId',
+                name: 'editDiscussion',
+                beforeEnter: isAuthenticated,
+                props: true,
+                component: () => import('../modules/Discussion/VDiscussionForm.vue'),
             },
             {
                 path: 'userProjects/:userId',
@@ -57,6 +70,13 @@ const routes = [
                 beforeEnter: isAuthenticated,
                 props: true,
                 component: () => import('../modules/Account/VAccountProjects.vue'),
+            },
+            {
+                path: 'userDiscussions/:userId',
+                name: 'userDiscussions',
+                beforeEnter: isAuthenticated,
+                props: true,
+                component: () => import('../modules/Account/VAccountDiscussions.vue'),
             }
         ],
         redirect: '/account/body'
@@ -75,7 +95,13 @@ const routes = [
         path: '/project/:projectId',
         name: 'project',
         props: true,
-        component: () => import('../modules/Account/VProjectInfo.vue'),
+        component: () => import('../modules/Project/VProjectInfo.vue'),
+    },
+    {
+        path: '/discussion/:discussionId',
+        name: 'discussion',
+        props: true,
+        component: () => import('../modules/Discussion/VDiscussionInfo.vue'),
     },
 ];
 

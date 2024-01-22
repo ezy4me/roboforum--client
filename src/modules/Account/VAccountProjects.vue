@@ -39,7 +39,27 @@
 
       <q-separator />
 
+      <q-card-section>
+        <q-chip
+          v-for="(i, index) in project.projectTags"
+          :key="index"
+          color="indigo"
+          text-color="white"
+          icon="tag">
+          {{ i.tag.name }}
+        </q-chip>
+      </q-card-section>
+
       <q-card-actions align="left">
+        <q-chip class="text-body1">
+          <q-avatar icon="event"> </q-avatar>
+          {{ new Date(project.date).toLocaleDateString("ru") }}
+        </q-chip>
+        <q-space />
+        <q-btn
+          @click="navigateTo('editProject', { projectId: project.id })"
+          flat
+          label="Редактировать" />
         <q-btn
           v-if="project.projectTypeId == 2"
           flat
@@ -47,15 +67,6 @@
           icon="lock"
           class="bg-red" />
         <q-btn v-else flat round icon="lock_open" class="bg-green" />
-        <q-btn flat round icon="event" />
-        <q-btn flat>
-          {{ new Date(project.date).toLocaleDateString("ru") }}
-        </q-btn>
-        <q-space />
-        <q-btn
-          @click="navigateTo('editProject', { projectId: project.id })"
-          flat
-          label="Редактировать" />
       </q-card-actions>
     </q-card>
 

@@ -66,7 +66,9 @@
                 >
               </q-item>
               <q-item clickable class="GL__menu-link">
-                <q-item-section>Новое обсуждение</q-item-section>
+                <q-item-section @click="navigateTo('newDiscussion')"
+                  >Новое обсуждение</q-item-section
+                >
               </q-item>
             </q-list>
           </q-menu>
@@ -163,7 +165,8 @@ export default {
       },
       {
         name: "Ваши обсуждения",
-        route: "main",
+        route: "userDiscussions",
+        params: { userId: store.state.auth.user?.userId },
       },
       {
         name: "Помощь",

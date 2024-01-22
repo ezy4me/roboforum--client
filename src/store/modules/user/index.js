@@ -4,11 +4,13 @@ import { UserAPI } from "@/http/userApi";
 const state = {
     userProfile: null,
     userProjects: [],
+    userDiscussions: [],
 }
 
 const getters = {
     getUserProfile: (state) => state.userProfile,
     getUserProjects: (state) => state.userProjects,
+    getUserDiscussions: (state) => state.userDiscussions,
 }
 
 const actions = {
@@ -38,7 +40,7 @@ const actions = {
             })
     },
 
-    async UPDATE_USER_PROFILE({ commit }, { userId, name, bio, company, location, image, links }) {
+    async UPDATE_USER_PROFILE({ commit }, { userId, name, bio, company, location, links, image }) {
         return UserAPI.updateUserProfile(userId, name, bio, company, location, image, links).then((res) => {
             console.log(res.data);
             commit('setUserProfile', res.data)
@@ -48,6 +50,8 @@ const actions = {
                 return error;
             })
     },
+
+    //////////////////////////////////////////////////////////////////////
 
     async GET_USER_PROJECTS({ commit }, { userId }) {
         return UserAPI.getUserProjects(userId).then((res) => {
@@ -79,6 +83,39 @@ const actions = {
                 return error;
             })
     },
+
+      //////////////////////////////////////////////////////////////////////
+
+      async GET_USER_DISCUSSIONS({ commit }, { userId }) {
+        return UserAPI.getUserDiscussions(userId).then((res) => {
+            console.log(res.data);
+            commit('setUserDiscussions', res.data)
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
+    async POST_USER_DISCUSSION({ _ }, { userId, title, description, discussionFiles, tags }) {
+        return UserAPI.postUserDiscussion(userId, title, description, discussionFiles, tags).then((res) => {
+            console.log(res.data);
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
+    async UPDATE_USER_DISCUSSION({ _ }, { discussionId, userId, title, description, discussionFiles, tags }) {
+        return UserAPI.updateUserDiscussion(discussionId, userId, title, description, discussionFiles, tags).then((res) => {
+            console.log(res.data);
+        })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
 }
 
 const mutations = {
@@ -90,6 +127,11 @@ const mutations = {
     setUserProjects(state, userProjects) {
         state.userProjects = userProjects;
         localStorage.setItem('userProjects', JSON.stringify(userProjects));
+    },
+
+    setUserDiscussions(state, userDiscussions) {
+        state.userDiscussions = userDiscussions;
+        localStorage.setItem('userDiscussions', JSON.stringify(userDiscussions));
     },
 
     setUser(state, user) {

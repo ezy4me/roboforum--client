@@ -27,10 +27,11 @@
   </div>
   <div class="row">
     <VComment
-      v-for="(comment, index) in projectComments"
+      v-for="(comment, index) in comments"
       :key="index"
       :comment="comment"
       :projectId="projectId"
+      :discussionId="discussionId"
       @loadData="loadData" />
   </div>
 </template>
@@ -41,6 +42,8 @@ import { useStore } from "vuex";
 export default {
   props: {
     projectId: Number,
+    discussionId: Number,
+    type: String,
   },
   setup(props) {
     const store = useStore();
@@ -49,30 +52,49 @@ export default {
       userId: store.state.auth.user?.userId || "",
       comment: "",
       projectId: props.projectId,
+      discussionId: props.discussionId,
     });
 
     const state = reactive({
       ...initialState,
     });
 
-    const projectComments = computed(() => store.state.project.projectComments);
+    const comments = computed(() => {
+      if (props.projectId) return store.state.project.projectComments;
+      if (props.discussionId) return store.state.discussion.discussionComments;
+    });
 
     const loadData = async () => {
-      await store.dispatch("project/GET_PROJECT_COMMENTS", {
-        projectId: props.projectId,
-      });
+      if (props.projectId)
+        await store.dispatch("project/GET_PROJECT_COMMENTS", {
+          projectId: props.projectId,
+        });
+      if (props.discussionId)
+        await store.dispatch("discussion/GET_DISCUSSION_COMMENTS", {
+          discussionId: props.discussionId,
+        });
     };
 
     const onSubmit = async () => {
       if (state.userId) {
-        await store
-          .dispatch("project/POST_PROJECT_COMMENT", {
-            ...state,
-          })
-          .then(() => {
-            loadData();
-            state.comment = null;
-          });
+        if (props.projectId)
+          await store
+            .dispatch("project/POST_PROJECT_COMMENT", {
+              ...state,
+            })
+            .then(() => {
+              loadData();
+              state.comment = null;
+            });
+        if (props.discussionId)
+          await store
+            .dispatch("discussion/POST_DISCUSSION_COMMENT", {
+              ...state,
+            })
+            .then(() => {
+              loadData();
+              state.comment = null;
+            });
       } else {
         alert("Авторизируйся");
       }
@@ -83,7 +105,7 @@ export default {
     });
 
     return {
-      projectComments,
+      comments,
       onSubmit,
       state,
       loadData,

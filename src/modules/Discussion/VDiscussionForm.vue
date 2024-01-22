@@ -7,7 +7,7 @@
         <q-card flat class="bg-negative">
           <q-card-section>
             <div class="text-h4 text-uppercase">
-              {{ projectId ? "Редактирование" : "Создание" }} проекта
+              {{ discussionId ? "Редактирование" : "Создание" }} обсуждения
             </div>
           </q-card-section>
         </q-card>
@@ -51,13 +51,13 @@
       </div>
 
       <div
-        v-if="state.projectFiles.length > 0"
+        v-if="state.discussionFiles.length > 0"
         class="row q-mb-md"
         :class="!$q.screen.gt.md ? 'justify-center' : ''">
         <q-card
           class="bg-transparent"
           flat
-          v-for="(i, index) in state?.projectFiles">
+          v-for="(i, index) in state?.discussionFiles">
           <q-img
             v-if="isImage(i)"
             class="q-ma-md"
@@ -116,18 +116,18 @@
                 filled
                 v-model="state.tags"
                 multiple
-                :options="projectTags.map((i) => i.name)"
+                :options="discussionTags.map((i) => i.name)"
                 use-chips
                 label="Теги">
                 <template v-slot:selected-item="scope">
                   <q-chip
+                  class="q-my-md"
                     removable
-                    dense
+                    color="indigo"
+                    text-color="white"
+                    icon="tag"
                     @remove="scope.removeAtIndex(scope.index)"
-                    :tabindex="scope.tabindex"
-                    color="grey-2"
-                    text-color="black"
-                    class="q-ma-sm">
+                    :tabindex="scope.tabindex">
                     <div class="q-pa-md">{{ scope.opt }}</div>
                   </q-chip>
                 </template>
@@ -139,52 +139,39 @@
 
       <div class="row q-mb-md">
         <div class="col">
-          <q-card flat class="bg-negative">
-            <q-card-section>
-              <q-radio
-                class="q-mr-md"
-                v-model="state.projectTypeId"
-                val="1"
-                label="Публичный" />
-              <q-radio
-                v-model="state.projectTypeId"
-                val="2"
-                label="Приватный" />
-            </q-card-section>
-          </q-card>
-        </div>
-      </div>
-
-      <div class="row q-mb-md">
-        <div class="col">
           <q-btn
             type="submit"
             class="full-width"
             color="indigo"
-            :label="projectId ? 'Сохранить' : 'Создать'" />
+            :label="discussionId ? 'Сохранить' : 'Создать'" />
         </div>
       </div>
     </q-form>
   </q-scroll-area>
 </template>
 <script>
-import { computed, onBeforeMount, onMounted, onUnmounted, reactive, ref, watch } from "vue";
+import {
+  computed,
+  onBeforeMount,
+  onMounted,
+  reactive,
+  watch,
+} from "vue";
 import { useStore } from "vuex";
 export default {
   props: {
-    projectId: Number,
+    discussionId: Number,
   },
   setup(props) {
     const store = useStore();
-    const projectTags = computed(() => store.state.tag.tags);
-    const editableProject = computed(() => store.state.project.project);
+    const discussionTags = computed(() => store.state.tag.tags);
+    const editableDiscussion = computed(() => store.state.discussion.discussion);
 
     const selectedFiles = reactive([]);
     const initialState = reactive({
       title: "",
       description: "",
-      projectTypeId: "1",
-      projectFiles: [],
+      discussionFiles: [],
       tags: [],
     });
 
@@ -235,14 +222,13 @@ export default {
     const state = reactive({ ...initialState });
 
     watch(
-      () => editableProject.value,
-      (newProject) => {
-        if (newProject) {
-          state.title = newProject.title || "";
-          state.description = newProject.description || "";
-          state.projectTypeId = newProject.projectTypeId || "";
-          state.projectFiles = newProject.projectFiles || "";
-          state.tags = newProject.projectTags.map((i) => i.tag.name) || "";
+      () => editableDiscussion.value,
+      (newDiscussion) => {
+        if (newDiscussion) {
+          state.title = newDiscussion.title || "";
+          state.description = newDiscussion.description || "";
+          state.discussionFiles = newDiscussion.discussionFiles || "";
+          state.tags = newDiscussion.discussionTags.map((i) => i.tag.name) || "";
         }
       },
       { immediate: true }
@@ -250,25 +236,24 @@ export default {
 
     onMounted(() => {
       store.dispatch("tag/GET_ALL_TAGS");
-      store.dispatch("project/GET_ONE_PROJECT", { projectId: props.projectId });
+      store.dispatch("discussion/GET_ONE_DISCUSSION", { discussionId: props.discussionId });
     });
 
     onBeforeMount(() => {
       state.title = "";
       state.description = "";
-      state.projectTypeId = "1";
-      state.projectFiles = [];
+      state.discussionFiles = [];
       state.tags = [];
     });
 
     const onFileInputChange = (event) => {
       const files = event.target.files;
-      state.projectFiles = [...state.projectFiles, ...files];
+      state.discussionFiles = [...state.discussionFiles, ...files];
     };
 
     const onSubmit = async () => {
       const tagIds = state.tags.map((tagName) => {
-        const tag = projectTags.value.find((tag) => tag.name === tagName);
+        const tag = discussionTags.value.find((tag) => tag.name === tagName);
         return tag.id;
       });
 
@@ -276,25 +261,24 @@ export default {
         userId: store.state.auth.user.userId,
         title: state.title,
         description: state.description,
-        projectTypeId: state.projectTypeId,
-        projectFiles: state.projectFiles,
+        discussionFiles: state.discussionFiles,
         tags: tagIds,
       };
 
-      if (props.projectId) {
-        await store.dispatch("user/UPDATE_USER_PROJECT", {
-          projectId: props.projectId,
+      if (props.discussionId) {
+        await store.dispatch("user/UPDATE_USER_DISCUSSION", {
+          discussionId: props.discussionId,
           ...data,
         });
       } else {
-        await store.dispatch("user/POST_USER_PROJECT", { ...data });
+        await store.dispatch("user/POST_USER_DISCUSSION", { ...data });
       }
     };
 
     const onDeleteImage = async (imageId) => {
       if (imageId) {
-        await store.dispatch("project/DELETE_PROJECT_IMAGE", {
-          projectId: props.projectId,
+        await store.dispatch("discussion/DELETE_DISCUSSION_IMAGE", {
+          discussionId: props.discussionId,
           imageId: imageId,
         });
       }
@@ -303,7 +287,7 @@ export default {
     return {
       state,
       onSubmit,
-      projectTags,
+      discussionTags,
       isImage,
       getImageSrc,
       onFileInputChange,

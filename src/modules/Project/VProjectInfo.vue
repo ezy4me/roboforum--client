@@ -6,7 +6,7 @@
           :thumb-style="thumbStyle"
           :bar-style="barStyle"
           class="col"
-          style="overflow: auto; min-width: auto; height: 90vh">
+          style="overflow: auto; min-width: auto; height: 88vh">
           <q-card v-if="project" class="q-mb-md bg-negative" flat>
             <q-card-section horizontal class="bg-grey-10">
               <q-card-section class="q-pt-xs">
@@ -25,8 +25,7 @@
                 :key="index"
                 color="indigo"
                 text-color="white"
-                icon="event"
-                >
+                icon="tag">
                 {{ i.tag.name }}
               </q-chip>
             </q-card-section>
@@ -73,6 +72,11 @@
             <q-separator />
 
             <q-card-actions align="right">
+              <q-chip class="text-body1">
+                <q-avatar color="indigo" icon="account_circle"> </q-avatar>
+                {{ project.user.username }}
+              </q-chip>
+              <q-space />
               <q-btn
                 v-if="project.projectTypeId == 2"
                 flat
@@ -80,18 +84,13 @@
                 icon="lock"
                 class="bg-red" />
               <q-btn v-else flat round icon="lock_open" class="bg-green" />
-
-              <q-btn flat round icon="event" />
-              <q-btn flat>
+              <q-chip class="text-body1">
+                <q-avatar icon="event"> </q-avatar>
                 {{ new Date(project.date).toLocaleDateString("ru") }}
-              </q-btn>
-              <q-separator vertical class="q-mx-md" />
-              <div class="text-body1 bg-indigo q-pa-sm rounded-borders">
-                {{ project.user.username }}
-              </div>
+              </q-chip>
             </q-card-actions>
           </q-card>
-          <VCommentsWall :projectId="projectId" />
+          <VCommentsWall :type="'project'" :projectId="projectId" />
         </q-scroll-area>
       </div>
     </div>
@@ -101,7 +100,7 @@
 <script>
 import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
-import VCommentsWall from "./VCommentsWall.vue";
+import VCommentsWall from "../Comment/VCommentsWall.vue";
 
 export default {
   props: {

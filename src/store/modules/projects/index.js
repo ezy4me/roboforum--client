@@ -15,7 +15,6 @@ const getters = {
 const actions = {
     async GET_PUBLIC_PROJECTS({ commit }) {
         return ProjectAPI.getPublicProjects().then((res) => {
-            // console.log(res.data);
             commit('setPublicProjects', res.data)
         })
             .catch((error) => {
@@ -26,7 +25,6 @@ const actions = {
 
     async GET_ONE_PROJECT({ commit }, { projectId }) {
         return await ProjectAPI.getOneProject(projectId).then((res) => {
-            // console.log(res.data);
             commit('setProject', res.data)
         })
             .catch((error) => {
@@ -37,7 +35,6 @@ const actions = {
 
     async GET_PROJECT_COMMENTS({ commit }, { projectId }) {
         return await ProjectAPI.getProjectComments(projectId).then((res) => {
-            // console.log(res.data);
             commit('setProjectComments', res.data)
         })
             .catch((error) => {
@@ -48,7 +45,6 @@ const actions = {
 
     async POST_PROJECT_COMMENT({ _ }, { projectId, userId, comment }) {
         return await ProjectAPI.postProjectComment(projectId, userId, comment).then((res) => {
-            console.log(res.data);
         })
             .catch((error) => {
                 console.log(error);
@@ -58,7 +54,6 @@ const actions = {
 
     async POST_PROJECT_COMMENT_ANSWER({ _ }, { projectId, userId, comment, userCommentId }) {
         return await ProjectAPI.postProjectCommentAnswer(projectId, userId, comment, userCommentId).then((res) => {
-            console.log(res.data);
         })
             .catch((error) => {
                 console.log(error);
@@ -68,7 +63,6 @@ const actions = {
 
     async DELETE_PROJECT_IMAGE({ commit }, { projectId, imageId }) {
         return await ProjectAPI.deleteProjectImage(projectId, imageId).then((res) => {
-            console.log(res.data);
             commit('setProject', res.data)
         })
             .catch((error) => {
@@ -79,7 +73,6 @@ const actions = {
 
     async SEARCH_PROJECT({ commit }, searchTerm) {
         return await ProjectAPI.searchProject(searchTerm).then((res) => {
-            console.log(res.data);
             commit('setPublicProjects', res.data)
         })
             .catch((error) => {

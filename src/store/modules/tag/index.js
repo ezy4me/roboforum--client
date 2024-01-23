@@ -10,7 +10,6 @@ const getters = {
 const actions = {
     async GET_ALL_TAGS({ commit }) {
         return TagAPI.getAllTags().then((res) => {
-            console.log(res.data);
             commit('setTags', res.data)
         })
             .catch((error) => {

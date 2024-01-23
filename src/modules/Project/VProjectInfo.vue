@@ -71,9 +71,12 @@
 
             <q-separator />
 
-            <q-card-actions align="right">
+            <q-card-actions
+              align="right"
+              class="cursor-pointer"
+              @click="navigateTo('userBody', { userId: project.userId })">
               <q-chip class="text-body1">
-                <q-avatar color="indigo" icon="account_circle"> </q-avatar>
+                <q-avatar color="indigo" icon="account_circle" />
                 {{ project.user.username }}
               </q-chip>
               <q-space />
@@ -85,7 +88,7 @@
                 class="bg-red" />
               <q-btn v-else flat round icon="lock_open" class="bg-green" />
               <q-chip class="text-body1">
-                <q-avatar icon="event"> </q-avatar>
+                <q-avatar icon="event" />
                 {{ new Date(project.date).toLocaleDateString("ru") }}
               </q-chip>
             </q-card-actions>
@@ -101,6 +104,7 @@
 import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
 import VCommentsWall from "../Comment/VCommentsWall.vue";
+import { useNavigation } from "@/hooks/useNavigation";
 
 export default {
   props: {
@@ -108,6 +112,8 @@ export default {
   },
   setup(props) {
     const store = useStore();
+    const { navigateTo } = useNavigation();
+
     const project = computed(() => store.state.project.project);
     const loadData = async () => {
       await store.dispatch("project/GET_ONE_PROJECT", {
@@ -135,6 +141,7 @@ export default {
       project,
       isImage,
       VITE_APP_API_URL: import.meta.env.VITE_APP_API_URL,
+      navigateTo,
     };
   },
   components: { VCommentsWall },

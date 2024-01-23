@@ -29,9 +29,13 @@
             <q-card-section
               horizontal
               class="my-card"
-              @click="navigateTo('discussion', { discussionId: discussion.id })">
+              @click="
+                navigateTo('discussion', { discussionId: discussion.id })
+              ">
               <q-card-section class="q-pt-xs">
-                <div class="text-h5 q-mt-sm q-mb-xs">{{ discussion.title }}</div>
+                <div class="text-h5 q-mt-sm q-mb-xs">
+                  {{ discussion.title }}
+                </div>
                 <div class="text-caption text-grey">
                   {{ discussion.description }}
                 </div>
@@ -51,7 +55,10 @@
               </q-chip>
             </q-card-section>
 
-            <q-card-actions align="right" class="bg-grey-10">
+            <q-card-actions
+              align="right"
+              class="bg-grey-10 cursor-pointer"
+              @click="navigateTo('userBody', { userId: discussion.userId })">
               <q-chip class="text-body1">
                 <q-avatar color="indigo" icon="account_circle"> </q-avatar>
                 {{ discussion.user.username }}
@@ -76,7 +83,9 @@ export default {
   setup() {
     const store = useStore();
     const { navigateTo } = useNavigation();
-    const publicDiscussions = computed(() => store.state.discussion.publicDiscussions);
+    const publicDiscussions = computed(
+      () => store.state.discussion.publicDiscussions
+    );
     const loading = ref(true);
 
     const searchTerm = ref("");

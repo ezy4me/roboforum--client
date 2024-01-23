@@ -16,7 +16,6 @@ const getters = {
 const actions = {
     async GET_USER_PROFILE({ commit }, { userId }) {
         return UserAPI.getUserProfile(userId).then((res) => {
-            console.log(res.data);
             commit('setUserProfile', res.data)
         })
             .catch((error) => {
@@ -31,7 +30,6 @@ const actions = {
 
     async UPDATE_USER({ commit }, { userId, username }) {
         return UserAPI.updateUser(userId, username).then((res) => {
-            console.log(res.data);
             commit('setUser', res.data)
         })
             .catch((error) => {
@@ -42,7 +40,6 @@ const actions = {
 
     async UPDATE_USER_PROFILE({ commit }, { userId, name, bio, company, location, links, image }) {
         return UserAPI.updateUserProfile(userId, name, bio, company, location, image, links).then((res) => {
-            console.log(res.data);
             commit('setUserProfile', res.data)
         })
             .catch((error) => {
@@ -55,7 +52,6 @@ const actions = {
 
     async GET_USER_PROJECTS({ commit }, { userId }) {
         return UserAPI.getUserProjects(userId).then((res) => {
-            console.log(res.data);
             commit('setUserProjects', res.data)
         })
             .catch((error) => {
@@ -66,7 +62,6 @@ const actions = {
 
     async POST_USER_PROJECT({ _ }, { userId, title, description, projectTypeId, projectFiles, tags }) {
         return UserAPI.postUserProject(userId, title, description, projectTypeId, projectFiles, tags).then((res) => {
-            console.log(res.data);
         })
             .catch((error) => {
                 console.log(error);
@@ -76,7 +71,6 @@ const actions = {
 
     async UPDATE_USER_PROJECT({ _ }, { projectId, userId, title, description, projectTypeId, projectFiles, tags }) {
         return UserAPI.updateUserProject(projectId, userId, title, description, projectTypeId, projectFiles, tags).then((res) => {
-            console.log(res.data);
         })
             .catch((error) => {
                 console.log(error);
@@ -88,7 +82,6 @@ const actions = {
 
       async GET_USER_DISCUSSIONS({ commit }, { userId }) {
         return UserAPI.getUserDiscussions(userId).then((res) => {
-            console.log(res.data);
             commit('setUserDiscussions', res.data)
         })
             .catch((error) => {
@@ -99,7 +92,6 @@ const actions = {
 
     async POST_USER_DISCUSSION({ _ }, { userId, title, description, discussionFiles, tags }) {
         return UserAPI.postUserDiscussion(userId, title, description, discussionFiles, tags).then((res) => {
-            console.log(res.data);
         })
             .catch((error) => {
                 console.log(error);
@@ -109,7 +101,6 @@ const actions = {
 
     async UPDATE_USER_DISCUSSION({ _ }, { discussionId, userId, title, description, discussionFiles, tags }) {
         return UserAPI.updateUserDiscussion(discussionId, userId, title, description, discussionFiles, tags).then((res) => {
-            console.log(res.data);
         })
             .catch((error) => {
                 console.log(error);

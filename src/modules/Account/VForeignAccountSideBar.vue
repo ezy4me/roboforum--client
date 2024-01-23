@@ -10,7 +10,7 @@
           class="my-avatar"
           fit="cover">
           <div class="absolute-bottom text-subtitle1 text-center">
-            {{ user.username }}
+            {{ userProfile.user.username }}
           </div>
         </q-img>
         <q-img
@@ -21,7 +21,7 @@
           img-class="my-avatar"
           fit="cover">
           <div class="absolute-bottom text-subtitle1 text-center">
-            {{ user.username }}
+            {{ userProfile.user.username }}
           </div>
         </q-img>
       </q-card-section>
@@ -29,40 +29,30 @@
     <q-card flat class="q-mb-md bg-negative">
       <q-card-section>
         <q-btn
-          @click="
-            navigateTo('accountBody'), { userId: store.state.auth.user?.userId }
-          "
+          @click="navigateTo('userBody'), { userId: routeUserId }"
           class="full-width q-mb-md bg-grey-10"
           flat
           label="Главная" />
 
         <q-btn
-          @click="navigateTo('accountEdit')"
-          flat
-          class="full-width q-mb-md bg-grey-10"
-          label="Редактировать профиль" />
-
-        <q-btn
           @click="
-            navigateTo('userProjects', {
-              userId: store.state.auth.user?.userId,
+            navigateTo('foreignUserProjects', {
+              userId: routeUserId,
             })
           "
           flat
           class="full-width q-mb-md bg-grey-10"
-          label="Мои проекты" />
+          label="Проекты" />
 
         <q-btn
           @click="
-            navigateTo('userDiscussions', {
-              userId: store.state.auth.user?.userId,
+            navigateTo('foreignUserDiscussions', {
+              userId: routeUserId,
             })
           "
           flat
           class="full-width q-mb-md bg-grey-10"
-          label="Мои обсуждения" />
-
-        <q-btn @click="onLogout" class="full-width" color="red" label="Выйти" />
+          label="Обсуждения" />
       </q-card-section>
     </q-card>
   </div>
@@ -70,31 +60,25 @@
 <script>
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 import { useNavigation } from "@/hooks/useNavigation";
 
 export default {
   setup() {
     const store = useStore();
+    const route = useRoute();
 
     const { navigateTo } = useNavigation();
-
-    const user = computed(
-      () => store.state.auth.user || localStorage.getItem("user")
-    );
 
     const userProfile = computed(
       () => store.state.user.userProfile || localStorage.getItem("userProfile")
     );
 
-    const onLogout = async () => {
-      await store.dispatch("auth/ON_LOGOUT").then(() => {
-        location.reload();
-      });
-    };
+    const routeUserId = computed(() => route.params.userId);
 
     const loadData = async () => {
       await store.dispatch("user/GET_USER_PROFILE", {
-        userId: store.state.auth.user.userId,
+        userId: routeUserId.value,
       });
     };
 
@@ -104,11 +88,10 @@ export default {
 
     return {
       navigateTo,
-      onLogout,
       store,
-      user,
       userProfile,
       VITE_APP_API_URL: import.meta.env.VITE_APP_API_URL,
+      routeUserId,
     };
   },
 };

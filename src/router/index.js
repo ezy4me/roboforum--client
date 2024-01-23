@@ -21,66 +21,104 @@ const routes = [
     },
 
     {
-        path: '/account',
+        path: '/account/',
         name: 'account',
         beforeEnter: isAuthenticated,
+        props: true,
         component: () => import('../modules/Account/AccountPage.vue'),
+        redirect: '/account/',
         children: [
             {
-                path: 'body',
+                // path: 'body',
+                path: '',
                 name: 'accountBody',
                 beforeEnter: isAuthenticated,
                 component: () => import('../modules/Account/VAccountBody.vue'),
             },
             {
-                path: 'edit',
+                // path: 'edit',
+                path: '',
                 name: 'accountEdit',
                 beforeEnter: isAuthenticated,
                 component: () => import('../modules/Account/VAccountEditData.vue'),
             },
             {
-                path: 'newProject',
+                // path: 'newProject',
+                path: '',
                 name: 'newProject',
                 beforeEnter: isAuthenticated,
                 component: () => import('../modules/Project/VProjectForm.vue'),
             },
             {
-                path: 'newDiscussion',
+                // path: 'newDiscussion',
+                path: '',
                 name: 'newDiscussion',
                 beforeEnter: isAuthenticated,
                 component: () => import('../modules/Discussion/VDiscussionForm.vue'),
             },
             {
-                path: 'editProject/:projectId',
+                path: 'edit/project/:projectId',
                 name: 'editProject',
                 beforeEnter: isAuthenticated,
                 props: true,
                 component: () => import('../modules/Project/VProjectForm.vue'),
             },
             {
-                path: 'editDiscussion/:discussionId',
+                path: 'edit/discussion/:discussionId',
                 name: 'editDiscussion',
                 beforeEnter: isAuthenticated,
                 props: true,
                 component: () => import('../modules/Discussion/VDiscussionForm.vue'),
             },
             {
-                path: 'userProjects/:userId',
+                path: 'projects/:userId',
                 name: 'userProjects',
                 beforeEnter: isAuthenticated,
                 props: true,
                 component: () => import('../modules/Account/VAccountProjects.vue'),
             },
             {
-                path: 'userDiscussions/:userId',
+                path: 'discussions/:userId',
                 name: 'userDiscussions',
                 beforeEnter: isAuthenticated,
                 props: true,
                 component: () => import('../modules/Account/VAccountDiscussions.vue'),
             }
         ],
-        redirect: '/account/body'
     },
+
+    {
+        path: '/user/:userId',
+        name: 'user',
+        beforeEnter: isAuthenticated,
+        props: true,
+        component: () => import('../modules/Account/ForeignAccountPage.vue'),
+        redirect: '/user/:userId/',
+        children: [
+            {
+                // path: 'body',
+                path: '',
+                name: 'userBody',
+                beforeEnter: isAuthenticated,
+                component: () => import('../modules/Account/VForeignAccountBody.vue'),
+            },
+            {
+                path: 'projects/:userId',
+                name: 'foreignUserProjects',
+                beforeEnter: isAuthenticated,
+                props: true,
+                component: () => import('../modules/Account/VForeignAccountProjects.vue'),
+            },
+            {
+                path: 'discussions/:userId',
+                name: 'foreignUserDiscussions',
+                beforeEnter: isAuthenticated,
+                props: true,
+                component: () => import('../modules/Account/VForeignAccountDiscussions.vue'),
+            }
+        ],
+    },
+
     {
         path: '/forum-discussions',
         name: 'forum-discussions',

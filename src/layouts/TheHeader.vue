@@ -156,7 +156,8 @@ export default {
     const accountLinks = reactive([
       {
         name: "Ваш профиль",
-        route: "account",
+        route: "accountBody",
+        // params: { userId: store.state.auth.user?.userId },
       },
       {
         name: "Ваши проекты",

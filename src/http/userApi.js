@@ -24,7 +24,6 @@ export const UserAPI = {
 
         formData.append('image', image)
 
-        console.log(links);
         for (let i = 0; i < links.length; i++) {
             formData.append('links[]', JSON.stringify(links[i]));
         }
@@ -53,8 +52,6 @@ export const UserAPI = {
 
         formData.append('tags', tags)
 
-        console.log(projectFiles);
-
         return FormDataAPIInstance.post(url, formData)
     },
 
@@ -72,10 +69,7 @@ export const UserAPI = {
                 formData.append('projectFiles', file);
         });
 
-        console.log(tags);
         formData.append('tags', tags)
-
-        console.log(projectFiles);
 
         return FormDataAPIInstance.put(url, formData)
     },
@@ -102,8 +96,6 @@ export const UserAPI = {
 
         formData.append('tags', tags)
 
-        console.log(discussionFiles);
-
         return FormDataAPIInstance.post(url, formData)
     },
 
@@ -120,10 +112,7 @@ export const UserAPI = {
                 formData.append('discussionFiles', file);
         });
 
-        console.log(tags);
         formData.append('tags', tags)
-
-        console.log(discussionFiles);
 
         return FormDataAPIInstance.put(url, formData)
     },

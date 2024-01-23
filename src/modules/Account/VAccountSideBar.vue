@@ -62,6 +62,14 @@
           class="full-width q-mb-md bg-grey-10"
           label="Мои обсуждения" />
 
+        <q-btn
+          @click="
+            navigateTo('favorite', { userId: store.state.auth.user?.userId })
+          "
+          class="full-width q-mb-md bg-grey-10"
+          flat
+          label="Избранное" />
+
         <q-btn @click="onLogout" class="full-width" color="red" label="Выйти" />
       </q-card-section>
     </q-card>

@@ -37,4 +37,19 @@ export const ProjectAPI = {
         const url = import.meta.env.VITE_APP_PROJECTS_SEARCH_API_URL + searchTerm
         return DefaultAPIInstance.get(url)
     },
+
+    getFavoriteProjects(userId) {
+        const url = import.meta.env.VITE_APP_USER_PROJECT_FAVORITE_API_URL + `/${userId}`
+        return LoginAPIInstance.get(url)
+    },
+
+    postFavoriteProject(userId, projectId) {
+        const url = import.meta.env.VITE_APP_USER_PROJECT_FAVORITE_API_URL + `/${userId}` + `/${projectId}`
+        return LoginAPIInstance.post(url)
+    },
+
+    deleteFavoriteProject(userId, projectId) {
+        const url = import.meta.env.VITE_APP_USER_PROJECT_FAVORITE_API_URL + `/${userId}` + `/${projectId}`
+        return LoginAPIInstance.delete(url)
+    },
 }

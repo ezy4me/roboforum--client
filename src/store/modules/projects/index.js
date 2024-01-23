@@ -3,6 +3,7 @@ const state = {
     publicProjects: null,
     project: null,
     projectsComments: null,
+    favoriteProjects: [],
 
 }
 
@@ -10,6 +11,7 @@ const getters = {
     getPublicProjects: (state) => state.publicProjects,
     getProject: (state) => state.project,
     getProjectComments: (state) => state.projectsComments,
+    getFavoriteProjects: (state) => state.favoriteProjects,
 }
 
 const actions = {
@@ -44,8 +46,8 @@ const actions = {
     },
 
     async POST_PROJECT_COMMENT({ _ }, { projectId, userId, comment }) {
-        return await ProjectAPI.postProjectComment(projectId, userId, comment).then((res) => {
-        })
+        return await ProjectAPI.postProjectComment(projectId, userId, comment)
+            .then()
             .catch((error) => {
                 console.log(error);
                 return error;
@@ -53,8 +55,8 @@ const actions = {
     },
 
     async POST_PROJECT_COMMENT_ANSWER({ _ }, { projectId, userId, comment, userCommentId }) {
-        return await ProjectAPI.postProjectCommentAnswer(projectId, userId, comment, userCommentId).then((res) => {
-        })
+        return await ProjectAPI.postProjectCommentAnswer(projectId, userId, comment, userCommentId)
+            .then()
             .catch((error) => {
                 console.log(error);
                 return error;
@@ -79,6 +81,35 @@ const actions = {
                 console.log(error);
                 return error;
             })
+    },
+
+    async GET_FAVORITE_PROJECTS({ commit }, { userId }) {
+        return await ProjectAPI.getFavoriteProjects(userId)
+            .then((res) => {
+                commit('setFavoriteProjects', res.data)
+            })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
+    async POST_FAVORITE_PROJECT({ commit }, { userId, projectId }) {
+        return await ProjectAPI.postFavoriteProject(userId, projectId)
+            .then()
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
+    async DELETE_FAVORITE_PROJECT({ commit }, { userId, projectId }) {
+        return await ProjectAPI.deleteFavoriteProject(userId, projectId)
+            .then()
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
     }
 
 }
@@ -97,7 +128,12 @@ const mutations = {
     setProjectComments(state, projectComments) {
         state.projectComments = projectComments;
         localStorage.setItem('projectComments', JSON.stringify(projectComments));
-    }
+    },
+
+    setFavoriteProjects(state, favoriteProjects) {
+        state.favoriteProjects = favoriteProjects;
+        localStorage.setItem('favoriteProjects', JSON.stringify(favoriteProjects));
+    },
 }
 
 export default {

@@ -83,6 +83,13 @@ const routes = [
                 beforeEnter: isAuthenticated,
                 props: true,
                 component: () => import('../modules/Account/VAccountDiscussions.vue'),
+            },
+            {
+                path: 'favorite/:userId',
+                name: 'favorite',
+                beforeEnter: isAuthenticated,
+                props: true,
+                component: () => import('../modules/Account/VAccountFavorite.vue'),
             }
         ],
     },

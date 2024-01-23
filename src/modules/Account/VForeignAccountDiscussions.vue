@@ -31,7 +31,7 @@
         <q-chip
           v-for="(i, index) in discussion.discussionTags"
           :key="index"
-          color="indigo"
+          color="orange"
           text-color="white"
           icon="tag">
           {{ i.tag.name }}

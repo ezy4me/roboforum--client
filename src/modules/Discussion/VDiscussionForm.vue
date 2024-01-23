@@ -123,7 +123,7 @@
                   <q-chip
                   class="q-my-md"
                     removable
-                    color="indigo"
+                    color="orange"
                     text-color="white"
                     icon="tag"
                     @remove="scope.removeAtIndex(scope.index)"

@@ -1,39 +1,27 @@
 <template>
   <div class="full-width">
     <div class="row q-mb-md">
-      <div class="col-8">
+      <div class="col-12">
         <q-card flat class="bg-negative">
           <q-card-section>
-            <div class="text-h6 text-uppercase">Обсуждения</div>
-          </q-card-section>
-        </q-card>
-      </div>
-      <div class="col q-ml-md">
-        <q-card flat class="bg-negative">
-          <q-card-section align="end">
-            <q-btn
-              @click="navigateTo('newDiscussion')"
-              round
-              color="indigo"
-              size="0.66rem"
-              icon="add" />
+            <div class="text-h6 text-uppercase">Отслеживаемые проекты</div>
           </q-card-section>
         </q-card>
       </div>
     </div>
 
     <q-card
-      v-for="(discussion, index) in userDiscussions"
+      v-for="(project, index) in userFavoriteProjects"
       :key="index"
       class="q-mb-md bg-grey-10"
       flat>
       <q-card-section
         horizontal
         class="my-card"
-        @click="navigateTo('discussion', { discussionId: discussion.id })">
+        @click="navigateTo('project', { projectId: project.id })">
         <q-card-section class="q-pt-xs">
-          <div class="text-h5 q-mt-sm q-mb-xs">{{ discussion.title }}</div>
-          <div class="text-caption">{{ discussion.description }}</div>
+          <div class="text-h5 q-mt-sm q-mb-xs">{{ project.title }}</div>
+          <div class="text-caption">{{ project.description }}</div>
         </q-card-section>
       </q-card-section>
 
@@ -41,9 +29,9 @@
 
       <q-card-section>
         <q-chip
-          v-for="(i, index) in discussion.discussionTags"
+          v-for="(i, index) in project.projectTags"
           :key="index"
-          color="orange"
+          color="indigo"
           text-color="white"
           icon="tag">
           {{ i.tag.name }}
@@ -53,18 +41,21 @@
       <q-card-actions align="left">
         <q-chip class="text-body1">
           <q-avatar icon="event"> </q-avatar>
-          {{ new Date(discussion.date).toLocaleDateString("ru") }}
+          {{ new Date(project.date).toLocaleDateString("ru") }}
         </q-chip>
         <q-space />
         <q-btn
-          @click="navigateTo('editDiscussion', { discussionId: discussion.id })"
+          @click="deleteFromFavorite(project)"
           flat
-          label="Редактировать" />
+          class="bg-red"
+          label="Удалить" />
+
+        <q-btn flat round icon="lock_open" class="bg-green" />
       </q-card-actions>
     </q-card>
 
     <q-card
-      v-if="userDiscussions.length == 0"
+      v-if="userFavoriteProjects.length == 0"
       class="my-card q-mb-md bg-grey-10"
       flat>
       <q-card-section class="q-pt-xs">
@@ -77,24 +68,41 @@
 </template>
 <script>
 import { useNavigation } from "@/hooks/useNavigation";
+import { useNotify } from "@/hooks/useNotify";
 import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
 export default {
   props: {
     userId: Number,
   },
+
   setup(props) {
     const store = useStore();
     const { navigateTo } = useNavigation();
+    const { notify } = useNotify();
 
-    const isUserDiscussions = ref(store.state.user.userDiscussions);
+    const isUserFavoriteProjects = ref(store.state.project.favoriteProjects);
 
-    const userDiscussions = computed(() => store.state.user.userDiscussions);
+    const userFavoriteProjects = computed(() =>
+      store.state.project.favoriteProjects.map((i) => i?.project)
+    );
 
     const loadData = async () => {
-      await store.dispatch("user/GET_USER_DISCUSSIONS", {
+      await store.dispatch("project/GET_FAVORITE_PROJECTS", {
         userId: props.userId,
       });
+    };
+
+    const deleteFromFavorite = async (project) => {
+      await store
+        .dispatch("project/DELETE_FAVORITE_PROJECT", {
+          userId: props.userId,
+          projectId: project.id,
+        })
+        .then(() => {
+          notify("OK");
+          loadData();
+        });
     };
 
     onMounted(() => {
@@ -102,10 +110,11 @@ export default {
     });
 
     return {
-      userDiscussions,
-      isUserDiscussions,
+      userFavoriteProjects,
+      isUserFavoriteProjects,
       navigateTo,
       store,
+      deleteFromFavorite,
     };
   },
 };

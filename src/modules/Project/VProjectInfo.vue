@@ -71,22 +71,20 @@
 
             <q-separator />
 
-            <q-card-actions
-              align="right"
-              class="cursor-pointer"
-              @click="navigateTo('userBody', { userId: project.userId })">
-              <q-chip class="text-body1">
-                <q-avatar color="indigo" icon="account_circle" />
-                {{ project.user.username }}
-              </q-chip>
-              <q-space />
+            <q-card-actions align="right" class="cursor-pointer">
               <q-btn
-                v-if="project.projectTypeId == 2"
                 flat
-                round
-                icon="lock"
-                class="bg-red" />
-              <q-btn v-else flat round icon="lock_open" class="bg-green" />
+                icon="account_circle"
+                @click="navigateTo('userBody', { userId: project.userId })"
+                :label="project.user.username" />
+              <q-space />
+
+              <q-btn
+                @click="addToFavorite"
+                flat
+                icon="star"
+                class="bg-yellow-8 q-mr-sm" />
+
               <q-chip class="text-body1">
                 <q-avatar icon="event" />
                 {{ new Date(project.date).toLocaleDateString("ru") }}
@@ -105,13 +103,15 @@ import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
 import VCommentsWall from "../Comment/VCommentsWall.vue";
 import { useNavigation } from "@/hooks/useNavigation";
-
+import { useNotify } from "@/hooks/useNotify";
 export default {
   props: {
     projectId: Number,
   },
   setup(props) {
     const store = useStore();
+    const { notify } = useNotify();
+
     const { navigateTo } = useNavigation();
 
     const project = computed(() => store.state.project.project);
@@ -132,6 +132,17 @@ export default {
       }
     }
 
+    const addToFavorite = async () => {
+      await store
+        .dispatch("project/POST_FAVORITE_PROJECT", {
+          userId: store.state.auth.user?.userId,
+          projectId: props.projectId,
+        })
+        .then(() => {
+          notify("OK");
+        });
+    };
+
     onMounted(() => {
       loadData();
     });
@@ -142,6 +153,7 @@ export default {
       isImage,
       VITE_APP_API_URL: import.meta.env.VITE_APP_API_URL,
       navigateTo,
+      addToFavorite,
     };
   },
   components: { VCommentsWall },

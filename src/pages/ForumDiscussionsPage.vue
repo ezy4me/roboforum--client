@@ -48,21 +48,19 @@
               <q-chip
                 v-for="(i, index) in discussion.discussionTags"
                 :key="index"
-                color="indigo"
+                color="orange"
                 text-color="white"
                 icon="tag">
                 {{ i.tag.name }}
               </q-chip>
             </q-card-section>
 
-            <q-card-actions
-              align="right"
-              class="bg-grey-10 cursor-pointer"
-              @click="navigateTo('userBody', { userId: discussion.userId })">
-              <q-chip class="text-body1">
-                <q-avatar color="indigo" icon="account_circle"> </q-avatar>
-                {{ discussion.user.username }}
-              </q-chip>
+            <q-card-actions align="right" class="bg-grey-10 cursor-pointer">
+              <q-btn
+                flat
+                icon="account_circle"
+                @click="navigateTo('userBody', { userId: discussion.userId })"
+                :label="discussion.user.username" />
               <q-space />
               <q-chip class="text-body1">
                 <q-avatar icon="event"> </q-avatar>

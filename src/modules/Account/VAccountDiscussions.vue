@@ -56,10 +56,13 @@
           {{ new Date(discussion.date).toLocaleDateString("ru") }}
         </q-chip>
         <q-space />
+
         <q-btn
           @click="navigateTo('editDiscussion', { discussionId: discussion.id })"
           flat
           label="Редактировать" />
+
+        <q-btn @click="onDeleteDiscussion(discussion)" flat label="Удалить" />
       </q-card-actions>
     </q-card>
 
@@ -77,6 +80,7 @@
 </template>
 <script>
 import { useNavigation } from "@/hooks/useNavigation";
+import { useNotify } from "@/hooks/useNotify";
 import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
 export default {
@@ -86,6 +90,7 @@ export default {
   setup(props) {
     const store = useStore();
     const { navigateTo } = useNavigation();
+    const { notify } = useNotify();
 
     const isUserDiscussions = ref(store.state.user.userDiscussions);
 
@@ -97,6 +102,17 @@ export default {
       });
     };
 
+    const onDeleteDiscussion = async (discussion) => {
+      await store
+        .dispatch("user/DELETE_USER_DISCUSSION", {
+          discussionId: discussion.id,
+        })
+        .then(() => {
+          notify("OK");
+          loadData();
+        });
+    };
+
     onMounted(() => {
       loadData();
     });
@@ -106,6 +122,7 @@ export default {
       isUserDiscussions,
       navigateTo,
       store,
+      onDeleteDiscussion,
     };
   },
 };

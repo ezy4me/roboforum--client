@@ -75,6 +75,7 @@
 <script>
 import { ref, reactive } from "vue";
 import { useStore } from "vuex";
+import { useNotify } from "@/hooks/useNotify";
 
 export default {
   props: {
@@ -95,6 +96,7 @@ export default {
   },
   setup(props, { emit }) {
     const store = useStore();
+    const { notify } = useNotify();
 
     const initialState = reactive({
       userId: store.state.auth.user?.userId || "",
@@ -119,26 +121,30 @@ export default {
     };
 
     const onSubmit = async () => {
-      if (props.projectId)
-        await store
-          .dispatch("project/POST_PROJECT_COMMENT_ANSWER", {
-            ...state,
-          })
-          .then(() => {
-            emit("loadData");
-            state.comment = null;
-            onCancelAnswerComment();
-          });
-      if (props.discussionId)
-        await store
-          .dispatch("discussion/POST_DISCUSSION_COMMENT_ANSWER", {
-            ...state,
-          })
-          .then(() => {
-            emit("loadData");
-            state.comment = null;
-            onCancelAnswerComment();
-          });
+      if (state.userId) {
+        if (props.projectId)
+          await store
+            .dispatch("project/POST_PROJECT_COMMENT_ANSWER", {
+              ...state,
+            })
+            .then(() => {
+              emit("loadData");
+              state.comment = null;
+              onCancelAnswerComment();
+            });
+        if (props.discussionId)
+          await store
+            .dispatch("discussion/POST_DISCUSSION_COMMENT_ANSWER", {
+              ...state,
+            })
+            .then(() => {
+              emit("loadData");
+              state.comment = null;
+              onCancelAnswerComment();
+            });
+      } else {
+        notify("ERR", "Войдите в учетную запись");
+      }
     };
 
     return {
@@ -151,4 +157,3 @@ export default {
   },
 };
 </script>
-

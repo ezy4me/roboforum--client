@@ -104,6 +104,7 @@ import { useStore } from "vuex";
 import VCommentsWall from "../Comment/VCommentsWall.vue";
 import { useNavigation } from "@/hooks/useNavigation";
 import { useNotify } from "@/hooks/useNotify";
+
 export default {
   props: {
     projectId: Number,

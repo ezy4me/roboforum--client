@@ -3,6 +3,7 @@ const state = {
     publicDiscussions: null,
     discussion: null,
     discussionsComments: null,
+    favoriteDiscussions: [],
 
 }
 
@@ -10,6 +11,8 @@ const getters = {
     getPublicDiscussions: (state) => state.publicDiscussions,
     getDiscussion: (state) => state.discussion,
     getDiscussionComments: (state) => state.discussionsComments,
+    getFavoriteDiscussions: (state) => state.favoriteDiscussions,
+
 }
 
 const actions = {
@@ -79,6 +82,35 @@ const actions = {
                 console.log(error);
                 return error;
             })
+    },
+
+    async GET_FAVORITE_DISCUSSIONS({ commit }, { userId }) {
+        return await DiscussionAPI.getFavoriteDiscussions(userId)
+            .then((res) => {
+                commit('setFavoriteDiscussions', res.data)
+            })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
+    async POST_FAVORITE_DISCUSSION({ commit }, { userId, discussionId }) {
+        return await DiscussionAPI.postFavoriteDiscussion(userId, discussionId)
+            .then()
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
+    async DELETE_FAVORITE_DISCUSSION({ commit }, { userId, discussionId }) {
+        return await DiscussionAPI.deleteFavoriteDiscussion(userId, discussionId)
+            .then()
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
     }
 
 }
@@ -97,7 +129,12 @@ const mutations = {
     setDiscussionComments(state, discussionComments) {
         state.discussionComments = discussionComments;
         localStorage.setItem('discussionComments', JSON.stringify(discussionComments));
-    }
+    },
+
+    setFavoriteDiscussions(state, favoriteDiscussions) {
+        state.favoriteDiscussions = favoriteDiscussions;
+        localStorage.setItem('favoriteDiscussions', JSON.stringify(favoriteDiscussions));
+    },
 }
 
 export default {

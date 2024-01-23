@@ -74,6 +74,11 @@ export const UserAPI = {
         return FormDataAPIInstance.put(url, formData)
     },
 
+    deleteUserProject(projectId) {
+        const url = import.meta.env.VITE_APP_PROJECTS_API_URL + `${projectId}`
+        return LoginAPIInstance.delete(url)
+    },
+
     ////////////////
 
     getUserDiscussions(userId) {
@@ -115,6 +120,11 @@ export const UserAPI = {
         formData.append('tags', tags)
 
         return FormDataAPIInstance.put(url, formData)
+    },
+
+    deleteUserDiscussion(discussionId) {
+        const url = import.meta.env.VITE_APP_DISCUSSION_API_URL + `${discussionId}`
+        return LoginAPIInstance.delete(url)
     },
 
 }

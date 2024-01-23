@@ -3,7 +3,7 @@
     <q-card flat class="q-mb-md bg-negative">
       <q-card-section>
         <q-img
-          v-if="!userProfile"
+          v-if="!userProfile?.image"
           src="/alien.jpg"
           spinner-color="white"
           img-class="my-avatar"

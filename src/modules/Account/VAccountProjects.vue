@@ -55,11 +55,16 @@
           <q-avatar icon="event"> </q-avatar>
           {{ new Date(project.date).toLocaleDateString("ru") }}
         </q-chip>
+
         <q-space />
+
         <q-btn
           @click="navigateTo('editProject', { projectId: project.id })"
           flat
           label="Редактировать" />
+
+        <q-btn @click="onDeleteProject(project)" flat label="Удалить" />
+
         <q-btn
           v-if="project.projectTypeId == 2"
           flat
@@ -84,6 +89,7 @@
 </template>
 <script>
 import { useNavigation } from "@/hooks/useNavigation";
+import { useNotify } from "@/hooks/useNotify";
 import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
 export default {
@@ -93,6 +99,7 @@ export default {
   setup(props) {
     const store = useStore();
     const { navigateTo } = useNavigation();
+    const { notify } = useNotify();
 
     const isUserProjects = ref(store.state.user.userProjects);
 
@@ -104,6 +111,17 @@ export default {
       });
     };
 
+    const onDeleteProject = async (project) => {
+      await store
+        .dispatch("user/DELETE_USER_PROJECT", {
+          projectId: project.id,
+        })
+        .then(() => {
+          notify("OK");
+          loadData();
+        });
+    };
+
     onMounted(() => {
       loadData();
     });
@@ -113,6 +131,7 @@ export default {
       isUserProjects,
       navigateTo,
       store,
+      onDeleteProject,
     };
   },
 };

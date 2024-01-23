@@ -75,7 +75,7 @@
           </q-img>
           <div class="absolute-top-right q-mr-sm q-mt-sm q-pa-md">
             <q-btn
-              @click="onDeleteImage(i.id)"
+              @click="onDeleteImage(i.id, index)"
               flat
               round
               icon="delete"
@@ -121,7 +121,7 @@
                 label="Теги">
                 <template v-slot:selected-item="scope">
                   <q-chip
-                  class="q-my-md"
+                    class="q-my-md"
                     removable
                     color="indigo"
                     text-color="white"
@@ -168,6 +168,7 @@
   </q-scroll-area>
 </template>
 <script>
+import { useNotify } from "@/hooks/useNotify";
 import {
   computed,
   onBeforeMount,
@@ -184,6 +185,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
+    const { notify } = useNotify();
     const projectTags = computed(() => store.state.tag.tags);
     const editableProject = computed(() => store.state.project.project);
 
@@ -290,21 +292,35 @@ export default {
       };
 
       if (props.projectId) {
-        await store.dispatch("user/UPDATE_USER_PROJECT", {
-          projectId: props.projectId,
-          ...data,
-        });
+        await store
+          .dispatch("user/UPDATE_USER_PROJECT", {
+            projectId: props.projectId,
+            ...data,
+          })
+          .then(() => {
+            notify("OK");
+          });
       } else {
-        await store.dispatch("user/POST_USER_PROJECT", { ...data });
+        await store.dispatch("user/POST_USER_PROJECT", { ...data }).then(() => {
+          notify("OK");
+        });
       }
     };
 
-    const onDeleteImage = async (imageId) => {
+    const onDeleteImage = async (imageId, index) => {
       if (imageId) {
         await store.dispatch("project/DELETE_PROJECT_IMAGE", {
           projectId: props.projectId,
           imageId: imageId,
         });
+      } else if (
+        index !== undefined &&
+        index >= 0 &&
+        index < state.projectFiles.length
+      ) {
+        const updatedProjectFiles = [...state.projectFiles];
+        updatedProjectFiles.splice(index, 1);
+        state.projectFiles = updatedProjectFiles;
       }
     };
 

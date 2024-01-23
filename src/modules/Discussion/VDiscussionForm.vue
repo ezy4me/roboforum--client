@@ -75,7 +75,7 @@
           </q-img>
           <div class="absolute-top-right q-mr-sm q-mt-sm q-pa-md">
             <q-btn
-              @click="onDeleteImage(i.id)"
+              @click="onDeleteImage(i.id, index)"
               flat
               round
               icon="delete"
@@ -121,7 +121,7 @@
                 label="Теги">
                 <template v-slot:selected-item="scope">
                   <q-chip
-                  class="q-my-md"
+                    class="q-my-md"
                     removable
                     color="orange"
                     text-color="white"
@@ -150,22 +150,21 @@
   </q-scroll-area>
 </template>
 <script>
-import {
-  computed,
-  onBeforeMount,
-  onMounted,
-  reactive,
-  watch,
-} from "vue";
+import { computed, onBeforeMount, onMounted, reactive, watch } from "vue";
 import { useStore } from "vuex";
+import { useNotify } from "@/hooks/useNotify";
+
 export default {
   props: {
     discussionId: Number,
   },
   setup(props) {
     const store = useStore();
+    const { notify } = useNotify();
     const discussionTags = computed(() => store.state.tag.tags);
-    const editableDiscussion = computed(() => store.state.discussion.discussion);
+    const editableDiscussion = computed(
+      () => store.state.discussion.discussion
+    );
 
     const selectedFiles = reactive([]);
     const initialState = reactive({
@@ -228,7 +227,8 @@ export default {
           state.title = newDiscussion.title || "";
           state.description = newDiscussion.description || "";
           state.discussionFiles = newDiscussion.discussionFiles || "";
-          state.tags = newDiscussion.discussionTags.map((i) => i.tag.name) || "";
+          state.tags =
+            newDiscussion.discussionTags.map((i) => i.tag.name) || "";
         }
       },
       { immediate: true }
@@ -236,7 +236,9 @@ export default {
 
     onMounted(() => {
       store.dispatch("tag/GET_ALL_TAGS");
-      store.dispatch("discussion/GET_ONE_DISCUSSION", { discussionId: props.discussionId });
+      store.dispatch("discussion/GET_ONE_DISCUSSION", {
+        discussionId: props.discussionId,
+      });
     });
 
     onBeforeMount(() => {
@@ -266,21 +268,37 @@ export default {
       };
 
       if (props.discussionId) {
-        await store.dispatch("user/UPDATE_USER_DISCUSSION", {
-          discussionId: props.discussionId,
-          ...data,
-        });
+        await store
+          .dispatch("user/UPDATE_USER_DISCUSSION", {
+            discussionId: props.discussionId,
+            ...data,
+          })
+          .then(() => {
+            notify("OK");
+          });
       } else {
-        await store.dispatch("user/POST_USER_DISCUSSION", { ...data });
+        await store
+          .dispatch("user/POST_USER_DISCUSSION", { ...data })
+          .then(() => {
+            notify("OK");
+          });
       }
     };
 
-    const onDeleteImage = async (imageId) => {
+    const onDeleteImage = async (imageId, index) => {
       if (imageId) {
         await store.dispatch("discussion/DELETE_DISCUSSION_IMAGE", {
           discussionId: props.discussionId,
           imageId: imageId,
         });
+      } else if (
+        index !== undefined &&
+        index >= 0 &&
+        index < state.discussionFiles.length
+      ) {
+        const updatedDiscussionFiles = [...state.discussionFiles];
+        updatedDiscussionFiles.splice(index, 1);
+        state.discussionFiles = updatedDiscussionFiles;
       }
     };
 

@@ -78,9 +78,18 @@ const actions = {
             })
     },
 
-      //////////////////////////////////////////////////////////////////////
+    async DELETE_USER_PROJECT({ _ }, { projectId }) {
+        return UserAPI.deleteUserProject(projectId)
+            .then()
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
 
-      async GET_USER_DISCUSSIONS({ commit }, { userId }) {
+    //////////////////////////////////////////////////////////////////////
+
+    async GET_USER_DISCUSSIONS({ commit }, { userId }) {
         return UserAPI.getUserDiscussions(userId).then((res) => {
             commit('setUserDiscussions', res.data)
         })
@@ -102,6 +111,15 @@ const actions = {
     async UPDATE_USER_DISCUSSION({ _ }, { discussionId, userId, title, description, discussionFiles, tags }) {
         return UserAPI.updateUserDiscussion(discussionId, userId, title, description, discussionFiles, tags).then((res) => {
         })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            })
+    },
+
+    async DELETE_USER_DISCUSSION({ _ }, { discussionId }) {
+        return UserAPI.deleteUserDiscussion(discussionId)
+            .then()
             .catch((error) => {
                 console.log(error);
                 return error;

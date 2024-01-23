@@ -81,6 +81,12 @@
                 :label="discussion.user.username" />
               <q-space />
 
+              <q-btn
+                @click="addToFavorite"
+                flat
+                icon="star"
+                class="bg-yellow-8 q-mr-sm" />
+
               <q-chip class="text-body1">
                 <q-avatar icon="event"> </q-avatar>
                 {{ new Date(discussion.date).toLocaleDateString("ru") }}
@@ -99,6 +105,7 @@ import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
 import VCommentsWall from "../Comment/VCommentsWall.vue";
 import { useNavigation } from "@/hooks/useNavigation";
+import { useNotify } from "@/hooks/useNotify";
 
 export default {
   props: {
@@ -107,6 +114,7 @@ export default {
   setup(props) {
     const store = useStore();
     const { navigateTo } = useNavigation();
+    const { notify } = useNotify();
 
     const discussion = computed(() => store.state.discussion.discussion);
     const loadData = async () => {
@@ -126,6 +134,17 @@ export default {
       }
     }
 
+    const addToFavorite = async () => {
+      await store
+        .dispatch("discussion/POST_FAVORITE_DISCUSSION", {
+          userId: store.state.auth.user?.userId,
+          discussionId: props.discussionId,
+        })
+        .then(() => {
+          notify("OK");
+        });
+    };
+
     onMounted(() => {
       loadData();
     });
@@ -136,6 +155,7 @@ export default {
       isImage,
       VITE_APP_API_URL: import.meta.env.VITE_APP_API_URL,
       navigateTo,
+      addToFavorite,
     };
   },
   components: { VCommentsWall },

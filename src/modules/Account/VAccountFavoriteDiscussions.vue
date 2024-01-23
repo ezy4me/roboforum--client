@@ -4,24 +4,24 @@
       <div class="col-12">
         <q-card flat class="bg-negative">
           <q-card-section>
-            <div class="text-h6 text-uppercase">Отслеживаемые проекты</div>
+            <div class="text-h6 text-uppercase">Отслеживаемые обсуждения</div>
           </q-card-section>
         </q-card>
       </div>
     </div>
 
     <q-card
-      v-for="(project, index) in userFavoriteProjects"
+      v-for="(discussion, index) in userFavoriteDiscussions"
       :key="index"
       class="q-mb-md bg-grey-10"
       flat>
       <q-card-section
         horizontal
         class="my-card"
-        @click="navigateTo('project', { projectId: project.id })">
+        @click="navigateTo('discussion', { discussionId: discussion.id })">
         <q-card-section class="q-pt-xs">
-          <div class="text-h5 q-mt-sm q-mb-xs">{{ project.title }}</div>
-          <div class="text-caption">{{ project.description }}</div>
+          <div class="text-h5 q-mt-sm q-mb-xs">{{ discussion.title }}</div>
+          <div class="text-caption">{{ discussion.description }}</div>
         </q-card-section>
       </q-card-section>
 
@@ -29,9 +29,9 @@
 
       <q-card-section>
         <q-chip
-          v-for="(i, index) in project.projectTags"
+          v-for="(i, index) in discussion.discussionTags"
           :key="index"
-          color="indigo"
+          color="orange"
           text-color="white"
           icon="tag">
           {{ i.tag.name }}
@@ -41,20 +41,17 @@
       <q-card-actions align="left">
         <q-chip class="text-body1">
           <q-avatar icon="event"> </q-avatar>
-          {{ new Date(project.date).toLocaleDateString("ru") }}
+          {{ new Date(discussion.date).toLocaleDateString("ru") }}
         </q-chip>
         <q-space />
-        <q-btn
-          @click="deleteFromFavorite(project)"
-          flat
-          label="Удалить" />
+        <q-btn @click="deleteFromFavorite(discussion)" flat label="Удалить" />
 
         <q-btn flat round icon="lock_open" class="bg-green" />
       </q-card-actions>
     </q-card>
 
     <q-card
-      v-if="userFavoriteProjects.length == 0"
+      v-if="userFavoriteDiscussions.length == 0"
       class="my-card q-mb-md bg-grey-10"
       flat>
       <q-card-section class="q-pt-xs">
@@ -80,23 +77,25 @@ export default {
     const { navigateTo } = useNavigation();
     const { notify } = useNotify();
 
-    const isUserFavoriteProjects = ref(store.state.project.favoriteProjects);
+    const isUserFavoriteDiscussions = ref(
+      store.state.discussion.favoriteDiscussions
+    );
 
-    const userFavoriteProjects = computed(() =>
-      store.state.project.favoriteProjects.map((i) => i?.project)
+    const userFavoriteDiscussions = computed(() =>
+      store.state.discussion.favoriteDiscussions.map((i) => i?.discussion)
     );
 
     const loadData = async () => {
-      await store.dispatch("project/GET_FAVORITE_PROJECTS", {
+      await store.dispatch("discussion/GET_FAVORITE_DISCUSSIONS", {
         userId: props.userId,
       });
     };
 
-    const deleteFromFavorite = async (project) => {
+    const deleteFromFavorite = async (discussion) => {
       await store
-        .dispatch("project/DELETE_FAVORITE_PROJECT", {
+        .dispatch("discussion/DELETE_FAVORITE_DISCUSSION", {
           userId: props.userId,
-          projectId: project.id,
+          discussionId: discussion.id,
         })
         .then(() => {
           notify("OK");
@@ -109,8 +108,8 @@ export default {
     });
 
     return {
-      userFavoriteProjects,
-      isUserFavoriteProjects,
+      userFavoriteDiscussions,
+      isUserFavoriteDiscussions,
       navigateTo,
       store,
       deleteFromFavorite,

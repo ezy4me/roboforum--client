@@ -37,4 +37,19 @@ export const DiscussionAPI = {
         const url = import.meta.env.VITE_APP_DISCUSSION_SEARCH_API_URL + searchTerm
         return DefaultAPIInstance.get(url)
     },
+
+    getFavoriteDiscussions(userId) {
+        const url = import.meta.env.VITE_APP_USER_DISCUSSION_FAVORITE_API_URL + `/${userId}`
+        return LoginAPIInstance.get(url)
+    },
+
+    postFavoriteDiscussion(userId, discussionId) {
+        const url = import.meta.env.VITE_APP_USER_DISCUSSION_FAVORITE_API_URL + `/${userId}` + `/${discussionId}`
+        return LoginAPIInstance.post(url)
+    },
+
+    deleteFavoriteDiscussion(userId, discussionId) {
+        const url = import.meta.env.VITE_APP_USER_DISCUSSION_FAVORITE_API_URL + `/${userId}` + `/${discussionId}`
+        return LoginAPIInstance.delete(url)
+    },
 }

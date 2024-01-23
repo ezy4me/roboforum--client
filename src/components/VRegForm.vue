@@ -48,11 +48,13 @@
 import { useQuasar } from "quasar";
 import { ref, reactive } from "vue";
 import { useStore } from "vuex";
+import { useNotify } from "@/hooks/useNotify";
 
 export default {
   setup(props, { emit }) {
     const $q = useQuasar();
     const store = useStore();
+    const { notify } = useNotify();
 
     const initialState = reactive({
       username: "",
@@ -63,13 +65,13 @@ export default {
     const state = reactive({ ...initialState });
     const accept = ref(false);
 
-
     const onSubmit = () => {
       store
         .dispatch("auth/ON_REGISTRATION", {
           ...state,
         })
         .then(() => {
+          notify("OK", "Регистрация прошла успешно");
           emit("close");
         });
     };

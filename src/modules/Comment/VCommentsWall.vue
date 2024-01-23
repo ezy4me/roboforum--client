@@ -39,6 +39,8 @@
 import { computed, onMounted, reactive } from "vue";
 import VComment from "./VComment.vue";
 import { useStore } from "vuex";
+import { useNotify } from "@/hooks/useNotify";
+
 export default {
   props: {
     projectId: Number,
@@ -47,6 +49,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
+    const { notify } = useNotify();
 
     const initialState = reactive({
       userId: store.state.auth.user?.userId || "",
@@ -96,7 +99,7 @@ export default {
               state.comment = null;
             });
       } else {
-        alert("Авторизируйся");
+        notify("ERR", "Войдите в учетную запись");
       }
     };
 

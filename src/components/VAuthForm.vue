@@ -36,13 +36,16 @@
 </template>
 
 <script>
-import store from "@/store";
 import { useQuasar } from "quasar";
 import { reactive, ref } from "vue";
+import { useNotify } from "@/hooks/useNotify";
+import { useStore } from "vuex";
 
 export default {
   setup(props, { emit }) {
+    const store = useStore();
     const $q = useQuasar();
+    const { notify } = useNotify();
 
     const initialState = reactive({
       email: "",
@@ -56,7 +59,9 @@ export default {
         .dispatch("auth/ON_LOGIN", {
           ...state,
         })
-        .then(() => {
+        .then((res) => {
+          if (!res?.message) location.reload();
+          else notify("ERR", "Данной учетной записи не найдено");
           emit("close");
         });
     };

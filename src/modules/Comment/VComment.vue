@@ -1,10 +1,12 @@
 <template>
   <q-card flat class="full-width q-pa-md">
     <q-card-section class="bg-grey-10">
-      <q-chip class="text-h6">
-        <q-avatar color="indigo" icon="account_circle"> </q-avatar>
-        {{ comment.userComment.user.username }}
-      </q-chip>
+      <q-btn
+        flat
+        color="blue"
+        icon="account_circle"
+        @click="navigateTo('userBody', { userId: comment.userComment.userId })"
+        :label="comment.userComment.user.username" />
       <div class="text-body1 q-my-sm q-ml-sm">
         {{ comment.userComment.comment }}
       </div>
@@ -59,10 +61,13 @@
       comment.discussionCommentFork"
       :key="index"
       class="q-ml-xl q-my-md bg-grey-10">
-      <q-chip class="text-h6">
-        <q-avatar color="black" icon="account_circle"> </q-avatar>
-        {{ answer.userComment.user.username }}
-      </q-chip>
+      <q-btn
+        flat
+        color="blue-3"
+        icon="account_circle"
+        @click="navigateTo('userBody', { userId: answer.userComment.userId })"
+        :label="answer.userComment.user.username" />
+
       <div class="text-body1 q-my-sm q-ml-sm">
         {{ answer.userComment.comment }}
       </div>
@@ -76,6 +81,7 @@
 import { ref, reactive } from "vue";
 import { useStore } from "vuex";
 import { useNotify } from "@/hooks/useNotify";
+import { useNavigation } from "@/hooks/useNavigation";
 
 export default {
   props: {
@@ -97,6 +103,7 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     const { notify } = useNotify();
+    const { navigateTo } = useNavigation();
 
     const initialState = reactive({
       userId: store.state.auth.user?.userId || "",
@@ -153,6 +160,7 @@ export default {
       onSubmit,
       isAnswer,
       state,
+      navigateTo,
     };
   },
 };
